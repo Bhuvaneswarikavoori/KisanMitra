@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- V12 - INTERACTIVE FINANCIALS & PROFIT PROJECTION ---
+    // --- V15 - ROBUST CHAT SCROLL FIX ---
     const db = {
         users: [
             { _id: 'user_anjamma', phone: '9876543210', name: { te: 'అంజమ్మ', en: 'Anjamma' }, language: 'te', capabilities: ['FARM_OWNER', 'LABOURER', 'EQUIPMENT_OWNER'], docs: ['AADHAAR', 'BANK_PASSBOOK', 'LAND_RECORD'] },
@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
             { _id: 'user_lakshmi', phone: '9876543218', name: { te: 'లక్ష్మి', en: 'Lakshmi' }, language: 'te', capabilities: ['LABOURER'], docs: ['AADHAAR'] },
             { _id: 'user_ranga', phone: '9876543219', name: { te: 'రంగా', en: 'Ranga' }, language: 'te', capabilities: ['LABOURER', 'LEADER', 'EQUIPMENT_OWNER'], docs: ['AADHAAR', 'BANK_PASSBOOK'] },
         ],
-        crops: [ // Added yieldPerAcreInQuintals for profit projection
-            { _id: 'crop_master_vari', name: { te: 'వరి', en: 'Paddy' }, emoji: '🌾', yieldPerAcreInQuintals: 30 },
-            { _id: 'crop_master_mirchi', name: { te: 'మిర్చి', en: 'Chilli' }, emoji: '🌶️', yieldPerAcreInQuintals: 23 },
+        crops: [
+            { _id: 'crop_master_vari', name: { te: 'వరి', en: 'Paddy' }, emoji: '🌾', yieldPerAcreInQuintals: 26 },
+            { _id: 'crop_master_mirchi', name: { te: 'మిర్చి', en: 'Chilli' }, emoji: '🌶️', yieldPerAcreInQuintals: 8 },
             { _id: 'crop_master_patti', name: { te: 'పత్తి', en: 'Cotton' }, emoji: '☁️', yieldPerAcreInQuintals: 10 },
             { _id: 'crop_master_kandhi', name: { te: 'కంది', en: 'Pigeon Pea' }, emoji: '🌱', yieldPerAcreInQuintals: 5 },
         ],
@@ -26,12 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
             { _id: 'farm_malli_1', userId: 'user_malli', farmName: { te: "జనపాడు దగ్గర పొలం", en: "Farm near Janapadu" }, acres: 12 },
             { _id: 'farm_venkanna_1', userId: 'user_venkanna', farmName: { te: "కొత్త పొలం", en: "New Farm" }, acres: 6 },
         ],
-        cropInstances: [ // Added areaSownInAcres to each instance
+        cropInstances: [
             { _id: 'ci_anjamma_mirchi', farmId: 'farm_anjamma_1', userId: 'user_anjamma', cropMasterId: 'crop_master_mirchi', areaSownInAcres: 2, status: { te: 'పెరుగుతోంది', en: 'Growing' },
                 expenses: [
                     { category: { te: 'విత్తనాలు', en: 'Seeds' }, amount: 4500 },
-                    { category: { te: 'ఎరువులు', en: 'Fertilizer' }, amount: 3200 },
-                    { category: { te: 'పురుగుమందులు', en: 'Pesticides' }, amount: 1800 },
+                    { category: { te: 'ఎరువులు', en: 'Fertilizer' }, amount: 32000 },
+                    { category: { te: 'పురుగుమందులు', en: 'Pesticides' }, amount: 18000 },
                     { category: { te: 'నీరు & కరెంట్', en: 'Water & Electricity'}, amount: 2500 }
                 ],
                 revenue: 0
@@ -39,15 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
             { _id: 'ci_anjamma_patti', farmId: 'farm_anjamma_2', userId: 'user_anjamma', cropMasterId: 'crop_master_patti', areaSownInAcres: 3.5, status: { te: 'అమ్మబడింది', en: 'Sold' },
                 expenses: [
                     { category: { te: 'విత్తనాలు', en: 'Seeds' }, amount: 6000 },
-                    { category: { te: 'కూలీలు', en: 'Labour' }, amount: 15000 },
-                    { category: { te: 'పరికరాలు', en: 'Equipment' }, amount: 4500 }
+                    { category: { te: 'కూలీలు', en: 'Labour' }, amount: 75000 },
+                    { category: { te: 'పరికరాలు', en: 'Equipment' }, amount: 14500 }
                 ],
                 revenue: 195000
             },
             { _id: 'ci_anjamma_vari', farmId: 'farm_anjamma_1', userId: 'user_anjamma', cropMasterId: 'crop_master_vari', areaSownInAcres: 2, status: { te: 'కోత కోయబడింది', en: 'Harvested' },
                 expenses: [
                     { category: { te: 'విత్తనాలు', en: 'Seeds' }, amount: 3000 },
-                    { category: { te: 'కూలీలు', en: 'Labour' }, amount: 8000 }
+                    { category: { te: 'కూలీలు', en: 'Labour' }, amount: 40000 }
                 ],
                 revenue: 0
             },
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { _id: 'ci_venkanna_kandhi', farmId: 'farm_venkanna_1', userId: 'user_venkanna', cropMasterId: 'crop_master_kandhi', areaSownInAcres: 6, status: { te: 'పెరుగుతోంది', en: 'Growing' }, expenses: [{ category: { te: 'ఎరువులు', en: 'Fertilizer' }, amount: 4000 }], revenue: 0 },
         ],
         labourProfiles: [
-            { userId: 'user_anjamma', skills: [{ te: 'మిర్చి కోత', en: 'Chilli Picking' }], ratePerDay: 550 },
+            { userId: 'user_anjamma', skills: [{ te: 'మిర్చి కోత', en: 'Chilli Picking' }, { te: 'వరి నాట్లు', en: 'Paddy Planting' },{ te: 'కలుపు తీయుట', en: 'Weeding' },{ te: 'పత్తి తీయుట', en: 'Cotton Picking' }], ratePerDay: 550 },
             { userId: 'user_ramarao', skills: [{ te: 'వరి నాట్లు', en: 'Paddy Planting' }], ratePerDay: 600 },
             { userId: 'user_kaasamma', skills: [{ te: 'వరి కోత', en: 'Paddy Harvesting' }], ratePerDay: 650 },
             { userId: 'user_subbarao', skills: [{ te: 'కలుపు తీయుట', en: 'Weeding' }], ratePerDay: 525 },
@@ -139,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
             made: { total: 0, byCategory: { CROP_SALE: 0, LABOUR_WORK: 0, EQUIPMENT_RENTAL: 0 } }
         };
 
-        // Calculate money spent from crop expenses
         db.cropInstances.filter(ci => ci.userId === userId).forEach(ci => {
             ci.expenses.forEach(exp => {
                 const categoryKey = exp.category.en.toUpperCase().replace(' & ', '_');
@@ -148,11 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 financials.spent.byCategory[categoryKey].amount += exp.amount;
             });
-            // Calculate money made from selling crops
             financials.made.byCategory.CROP_SALE += ci.revenue;
         });
 
-        // Calculate money made from providing services (labour/equipment)
         db.bookings.filter(b => b.providerId === userId && b.status === 'COMPLETED').forEach(b => {
             if (b.resourceType === 'EQUIPMENT') {
                 financials.made.byCategory.EQUIPMENT_RENTAL += b.totalCost;
@@ -170,8 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderPieChart = (financials) => {
         const chartContainer = document.getElementById('pie-chart-container');
         const summaryEl = document.getElementById('financial-summary-text');
+        const financialCard = document.getElementById('financial-card');
 
-        chartContainer.innerHTML = ''; // Clear previous chart
+        chartContainer.innerHTML = '';
         summaryEl.innerHTML = `
             <div class="financial-total spent">
                 <span>మొత్తం ఖర్చు</span>
@@ -181,7 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>మొత్తం ఆదాయం</span>
                 <strong>₹${financials.made.total.toLocaleString('en-IN')}</strong>
             </div>
-            <div id="pie-tooltip" class="pie-tooltip">క్లిక్ చేయండి</div>`;
+            <div id="pie-tooltip" class="pie-tooltip">విభాగంపై క్లిక్ చేయండి</div>`;
+
+        financialCard.style.display = (financials.spent.total > 0 || financials.made.total > 0) ? 'block' : 'none';
 
         const tooltip = document.getElementById('pie-tooltip');
         const data = financials.spent.byCategory;
@@ -235,13 +235,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderPieChart(financials);
 
         const summaryContainer = document.getElementById('summary-cards-container');
-        summaryContainer.innerHTML = ''; // Clear previous cards
+        summaryContainer.innerHTML = '';
 
-        // Potential Profit Card
-        const growingCrops = db.cropInstances.filter(ci => ci.userId === currentUser._id && ci.status.en === 'Growing');
-        if (growingCrops.length > 0) {
+        const unsoldCrops = db.cropInstances.filter(ci => ci.userId === currentUser._id && ci.status.en !== 'Sold');
+        if (unsoldCrops.length > 0) {
             let profitHtml = '<div class="card profit-card"><h3>📈 అంచనా లాభం</h3>';
-            growingCrops.forEach(ci => {
+            unsoldCrops.forEach(ci => {
                 const cropInfo = db.crops.find(c => c._id === ci.cropMasterId);
                 const marketPriceInfo = db.marketPrices.filter(p => p.cropMasterId === ci.cropMasterId);
                 if (!cropInfo.yieldPerAcreInQuintals || marketPriceInfo.length === 0) return;
@@ -262,7 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
             summaryContainer.innerHTML += profitHtml;
         }
 
-        // Other summary cards (market prices, schedules) can be added here as before
         const labourSchedule = db.schedules.filter(s => s.resourceId === currentUser._id && s.resourceType === 'LABOUR');
         if (labourSchedule.length > 0) {
             let labourHTML = '<div class="card"><h3>నా కూలీ పనులు</h3><ul>';
@@ -281,11 +279,23 @@ document.addEventListener('DOMContentLoaded', () => {
         db.cropInstances.filter(ci => ci.userId === currentUser._id).forEach(ci => {
             const cropInfo = db.crops.find(c => c._id === ci.cropMasterId);
             const farmInfo = db.farms.find(f => f._id === ci.farmId);
+
+            const totalExpenses = ci.expenses.reduce((sum, exp) => sum + exp.amount, 0);
+            let financialInfoHtml = '';
+            if (ci.status.en === 'Sold') {
+                const profit = ci.revenue - totalExpenses;
+                const profitClass = profit >= 0 ? 'profit' : 'investment';
+                financialInfoHtml = `<p class="${profitClass}">లాభం: ₹${profit.toLocaleString('en-IN')}</p>`;
+            } else {
+                financialInfoHtml = `<p>పెట్టుబడి: ₹${totalExpenses.toLocaleString('en-IN')}</p>`;
+            }
+
             content.innerHTML += `<div class="card card-flex clickable" data-crop-id="${ci._id}">
                     <span class="card-emoji">${cropInfo.emoji}</span>
-                    <div>
+                    <div class="crop-details">
                         <h3>${cropInfo.name.te} - ${farmInfo.farmName.te}</h3>
                         <p>విస్తీర్ణం: ${ci.areaSownInAcres} ఎకరాలు | స్థితి: ${ci.status.te}</p>
+                        ${financialInfoHtml}
                     </div>
                     <div class="status-dot ${ci.status.en.toLowerCase()}"></div></div>`;
         });
@@ -294,7 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderHireScreen = (filter = 'other-labour-posts') => {
         const hireContent = document.getElementById('hire-content');
-        const statusMap = { OPEN: 'తెరిచి ఉంది', FILLED: 'నింపబడింది' };
         let postsToDisplay = [];
         switch(filter) {
             case 'my-labour-posts': postsToDisplay = db.postings.filter(p => p.type === 'NEEDS_LABOUR' && p.postedByUserId === currentUser._id); break;
@@ -396,7 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const bubble = document.createElement('div');
         bubble.classList.add('chat-bubble', sender);
         if (type === 'image') {
-            bubble.innerHTML = `<img src="https://i.imgur.com/g06n6V1.jpg" class="chat-image" alt="A close-up image of a green chilli plant leaf affected by leaf curl disease. The leaf is visibly curled, crinkled, and slightly yellowed, showing typical symptoms of the viral infection.">`;
+            bubble.innerHTML =
+                '<img src="leaf_curl_mirchi.jpg" className="chat-image" alt="Chilli leaf with leaf curl."/>';
         } else if (type === 'options') {
             bubble.classList.add('options');
             const container = document.createElement('div');
@@ -413,7 +423,9 @@ document.addEventListener('DOMContentLoaded', () => {
             bubble.innerHTML = content;
         }
         chatLog.appendChild(bubble);
-        chatLog.scrollTop = chatLog.scrollHeight;
+
+        // ROBUST SCROLL FIX: Use scrollIntoView on the new bubble itself.
+        bubble.scrollIntoView({behavior: "smooth", block: "end"});
     };
 
     const startFarmChat = (cropInstanceId) => {
@@ -425,10 +437,10 @@ document.addEventListener('DOMContentLoaded', () => {
         navigateTo('farm-chat-screen');
         setTimeout(() => addChatMessage('agent', `నమస్కారం! మీ ${cropInfo.name.te} పంటకు నేను ఎలా సహాయపడగలను?`), 500);
         setTimeout(() => addChatMessage('user', '', 'options', [
-            { text: 'వ్యాధిని నిర్ధారించండి', action: 'diagnose-start' },
-            { text: 'వాతావరణం తనిఖీ', action: 'check-weather' },
-            { text: 'మార్కెట్ ధర', action: 'check-price' },
-            { text: 'కూలీల కోసం పోస్ట్ చేయండి', action: 'post-labour' },
+            {text: 'వ్యాధిని నిర్ధారించండి', action: 'diagnose-start'},
+            {text: 'వాతావరణం తనిఖీ', action: 'check-weather'},
+            {text: 'మార్కెట్ ధర', action: 'check-price'},
+            {text: 'కూలీల కోసం పోస్ట్ చేయండి', action: 'post-labour'},
         ]), 1500);
     };
 
@@ -438,20 +450,32 @@ document.addEventListener('DOMContentLoaded', () => {
         chatLog.innerHTML = '';
         navigateTo('farm-chat-screen');
         setTimeout(() => addChatMessage('agent', 'నమస్కారం! ప్రభుత్వ పథకాల గురించి నేను మీకు ఎలా సహాయపడగలను?'), 500);
-        setTimeout(() => addChatMessage('user', '', 'options', [{ text: 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?', action: 'scheme-apply-pmkisan' }]), 1500);
+        setTimeout(() => addChatMessage('user', '', 'options', [{
+            text: 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?',
+            action: 'scheme-apply-pmkisan'
+        }]), 1500);
     };
 
     const handleChatOption = (action) => {
         const optionsContainer = document.querySelector('.chat-options-container');
         if (optionsContainer) optionsContainer.parentElement.remove();
-        const actionTextMap = { 'diagnose-start': 'వ్యాధిని నిర్ధారించండి', 'check-price': 'మార్కెట్ ధర', 'post-labour': 'కూలీల కోసం పోస్ట్ చేయండి', 'find-jobs': 'అందుబాటులో ఉన్న పనులు', 'scheme-apply-pmkisan': 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?' };
+        const actionTextMap = {
+            'diagnose-start': 'వ్యాధిని నిర్ధారించండి',
+            'check-price': 'మార్కెట్ ధర',
+            'post-labour': 'కూలీల కోసం పోస్ట్ చేయండి',
+            'find-jobs': 'అందుబాటులో ఉన్న పనులు',
+            'scheme-apply-pmkisan': 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?'
+        };
         if (actionTextMap[action]) addChatMessage('user', actionTextMap[action]);
 
         setTimeout(() => {
             switch (action) {
                 case 'diagnose-start':
                     addChatMessage('agent', 'తప్పకుండా. దయచేసి వ్యాధి సోకిన ఆకు యొక్క స్పష్టమైన ఫోటోను అప్‌లోడ్ చేయండి.');
-                    setTimeout(() => addChatMessage('user', '', 'options', [{ text: 'ఫోటో అప్‌లోడ్ చేయండి', action: 'diagnose-upload' }]), 1000);
+                    setTimeout(() => addChatMessage('user', '', 'options', [{
+                        text: 'ఫోటో అప్‌లోడ్ చేయండి',
+                        action: 'diagnose-upload'
+                    }]), 1000);
                     break;
                 case 'diagnose-upload':
                     addChatMessage('user', '', 'image');
