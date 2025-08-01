@@ -170,7 +170,22 @@ body {
     border-bottom-right-radius: 5px;
     margin-left: auto; /* ALIGNMENT FIX */
 }
-.chat-image { width: 100%; max-width: 220px; border-radius: 15px; display: block; }
+.chat-bubble.image-bubble {
+    background: transparent;
+    padding: 0;
+    width: 200px;  /* You can adjust this width */
+    height: 150px; /* Set a specific height */
+    border-radius: 15px;
+    overflow: hidden; /* Ensures the image stays within the rounded corners */
+}
+
+/* The image itself, configured to fill the container */
+.chat-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Scales and crops the image to fit, no distortion */
+    display: block;
+}
 
 .chat-bubble.options {
     background: none;

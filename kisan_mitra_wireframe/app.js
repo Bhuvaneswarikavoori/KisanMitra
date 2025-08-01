@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const bubble = document.createElement('div');
         bubble.classList.add('chat-bubble', sender);
         if (type === 'image') {
-            // Updated to use 'class' instead of 'className'
+            bubble.classList.add('image-bubble'); // Add a specific class for styling
             bubble.innerHTML = `<img src="leaf_curl_mirchi.jpg" class="chat-image" alt="Chilli leaf with leaf curl."/>`;
         } else if (type === 'options') {
             bubble.classList.add('options');
@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('chat-title').innerText = `${cropInfo.name[lang]} ${cropInfo.emoji}`;
         chatLog.innerHTML = '';
         navigateTo('farm-chat-screen');
-        setTimeout(() => addChatMessage('agent', `${uiStrings.greeting[lang]}! ${cropInfo.name[lang]} ${uiStrings.how_can_i_help[lang]}`), 500);
+        setTimeout(() => addChatMessage('agent', `${uiStrings.greeting[lang]}, ${currentUser.name[lang]}! ${uiStrings.how_can_i_help[lang]}`), 500);
         setTimeout(() => addChatMessage('user', '', 'options', [
             {text: uiStrings.diagnose_disease[lang], action: 'diagnose-start'},
             {text: uiStrings.check_weather[lang], action: 'check-weather'},
