@@ -15,7 +15,7 @@
 <div id="app-container">
     <div id="login-screen" class="screen active">
         <div class="login-header">
-            <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-farmer-farm-flaticons-lineal-color-flat-icons-3.png" alt="Kisan Mitra Logo"/>
+            <span class="material-icons logo-icon">agriculture</span>
             <h1>కిసాన్ మిత్ర</h1>
             <p>మీ వ్యవసాయ సహాయకుడు</p>
         </div>
@@ -30,7 +30,19 @@
         <header class="app-header">
             <h2 id="welcome-message"></h2>
         </header>
-        <main id="home-content" class="screen-content">
+        <main class="screen-content">
+            <div id="weather-card-container">
+                <div class="card weather-card"><div><h3>గుంటూరు</h3><p>34°C, ఎండ</p></div><span class="material-icons">wb_sunny</span></div>
+            </div>
+            <div class="card" id="financial-card" style="display: none;">
+                <h3>ఆర్థిక సారాంశం</h3>
+                <div class="pie-chart-container">
+                    <div id="pie-chart"></div>
+                    <div id="pie-chart-legend"></div>
+                </div>
+                <div id="financial-summary-totals"></div>
+            </div>
+            <div id="summary-cards-container"></div>
         </main>
     </div>
 
@@ -41,7 +53,7 @@
 
     <div id="farm-chat-screen" class="screen">
         <header class="app-header chat-header">
-            <span class="material-icons" id="back-to-farm">arrow_back</span>
+            <span class="material-icons" id="back-from-chat-btn">arrow_back</span>
             <h2 id="chat-title"></h2>
         </header>
         <main id="chat-log" class="screen-content"></main>
@@ -58,14 +70,9 @@
         <main id="hire-content" class="screen-content with-tabs"></main>
     </div>
 
-    <div id="market-prices-screen" class="screen">
-        <header class="app-header"><h2>మార్కెట్ ధరలు</h2></header>
-        <div class="filters">
-            <span>Sort by:</span>
-            <button class="filter-btn active" data-sort="price">ధర</button>
-            <button class="filter-btn" data-sort="locality">ప్రాంతం</button>
-        </div>
-        <main id="market-prices-content" class="screen-content with-tabs"></main>
+    <div id="schemes-screen" class="screen">
+        <header class="app-header"><h2>ప్రభుత్వ పథకాలు</h2></header>
+        <main id="schemes-content" class="screen-content"></main>
     </div>
 
     <div id="profile-screen" class="screen">
@@ -86,9 +93,9 @@
             <span class="material-icons">engineering</span>
             <span>సేవలు</span>
         </button>
-        <button class="nav-btn" data-screen="market-prices-screen">
-            <span class="material-icons">bar_chart</span>
-            <span>ధరలు</span>
+        <button class="nav-btn" data-screen="schemes-screen">
+            <span class="material-icons">account_balance</span>
+            <span>పథకాలు</span>
         </button>
         <button class="nav-btn" data-screen="profile-screen">
             <span class="material-icons">person</span>
