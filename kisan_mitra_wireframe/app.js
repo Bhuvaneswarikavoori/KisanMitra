@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         status: { te: 'స్థితి', en: 'Status' },
         profit: { te: 'లాభం', en: 'Profit' },
         investment: { te: 'పెట్టుబడి', en: 'Investment' },
+        no_crops_found: { te: 'మీరు పంటలు ఏమి వేయలేదు.', en: 'You have not planted any crops.' },
         // Hire Screen
         farmer: { te: 'రైతు', en: 'Farmer' },
         location: { te: 'స్థానం', en: 'Location' },
@@ -424,7 +425,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const content = document.getElementById('my-farm-content');
         const lang = currentUser.language;
         content.innerHTML = '';
-        db.cropInstances.filter(ci => ci.userId === currentUser._id).forEach(ci => {
+
+        const userCrops = db.cropInstances.filter(ci => ci.userId === currentUser._id);
+
+        if (userCrops.length === 0) {
+            // If there are no crops, display the message and stop.
+            content.innerHTML = `<div class="card"><p>${uiStrings.no_crops_found[lang]}</p></div>`;
+            return;
+        }
+
+        // If crops exist, render them as before.
+        userCrops.forEach(ci => {
             const cropInfo = db.crops.find(c => c._id === ci.cropMasterId);
             const farmInfo = db.farms.find(f => f._id === ci.farmId);
 
@@ -439,13 +450,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             content.innerHTML += `<div class="card card-flex clickable" data-crop-id="${ci._id}">
-                    <span class="card-emoji">${cropInfo.emoji}</span>
-                    <div class="crop-details">
-                        <h3>${cropInfo.name[lang]} - ${farmInfo.farmName[lang]}</h3>
-                        <p>${uiStrings.area[lang]}: ${ci.areaSownInAcres} ${uiStrings.acres[lang]} | ${uiStrings.status[lang]}: ${ci.status[lang]}</p>
-                        ${financialInfoHtml}
-                    </div>
-                    <div class="status-dot ${ci.status.en.toLowerCase()}"></div></div>`;
+                <span class="card-emoji">${cropInfo.emoji}</span>
+                <div class="crop-details">
+                    <h3>${cropInfo.name[lang]} - ${farmInfo.farmName[lang]}</h3>
+                    <p>${uiStrings.area[lang]}: ${ci.areaSownInAcres} ${uiStrings.acres[lang]} | ${uiStrings.status[lang]}: ${ci.status[lang]}</p>
+                    ${financialInfoHtml}
+                </div>
+                <div class="status-dot ${ci.status.en.toLowerCase()}"></div></div>`;
         });
         content.querySelectorAll('.card.clickable').forEach(card => card.addEventListener('click', () => startFarmChat(card.dataset.cropId)));
     };
