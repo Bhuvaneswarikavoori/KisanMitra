@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,19 +44,31 @@
             <h2 id="chat-title"></h2>
         </header>
         <main id="chat-log" class="screen-content"></main>
-        <div id="chat-input-area"></div>
     </div>
 
-    <div id="marketplace-screen" class="screen">
-        <header class="app-header"><h2>మార్కెట్ ప్లేస్</h2></header>
-        <main id="marketplace-content" class="screen-content"></main>
+    <div id="hire-screen" class="screen">
+        <header class="app-header"><h2>అద్దెకు</h2></header>
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="labour">కూలీలు</button>
+            <button class="tab-btn" data-tab="equipment">పరికరాలు</button>
+        </div>
+        <main id="hire-content" class="screen-content with-tabs"></main>
+    </div>
+
+    <div id="market-prices-screen" class="screen">
+        <header class="app-header"><h2>మార్కెట్ ధరలు</h2></header>
+        <div class="filters">
+            <span>Sort by:</span>
+            <button class="filter-btn" data-sort="price">ధర</button>
+            <button class="filter-btn" data-sort="locality">ప్రాంతం</button>
+        </div>
+        <main id="market-prices-content" class="screen-content with-tabs"></main>
     </div>
 
     <div id="profile-screen" class="screen">
         <header class="app-header"><h2>నా ప్రొఫైల్</h2></header>
         <main id="profile-content" class="screen-content"></main>
     </div>
-
 
     <nav id="bottom-nav">
         <button class="nav-btn active" data-screen="home-screen">
@@ -67,9 +79,13 @@
             <span class="material-icons">grass</span>
             <span>నా పొలం</span>
         </button>
-        <button class="nav-btn" data-screen="marketplace-screen">
-            <span class="material-icons">storefront</span>
-            <span>మార్కెట్</span>
+        <button class="nav-btn" data-screen="hire-screen">
+            <span class="material-icons">engineering</span>
+            <span>అద్దెకు</span>
+        </button>
+        <button class="nav-btn" data-screen="market-prices-screen">
+            <span class="material-icons">bar_chart</span>
+            <span>ధరలు</span>
         </button>
         <button class="nav-btn" data-screen="profile-screen">
             <span class="material-icons">person</span>

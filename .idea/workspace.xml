@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f9897c1-fcb6-4921-9fae-33f6568e9f7c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kisan_mitra_wireframe/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/kisan_mitra_wireframe/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kisan_mitra_wireframe/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/kisan_mitra_wireframe/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kisan_mitra_wireframe/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/kisan_mitra_wireframe/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/seed_guntur.js" beforeDir="false" afterPath="$PROJECT_DIR$/seed_guntur.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +62,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1754051264299</updated>
-      <workItem from="1754051265369" duration="2608000" />
+      <workItem from="1754051265369" duration="3799000" />
     </task>
     <servers />
   </component>
