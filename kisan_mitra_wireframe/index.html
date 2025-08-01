@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kisan Mitra Wireframe</title>
+    <title>Kisan Mitra</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,22 +32,30 @@
         </header>
         <main class="screen-content">
             <div id="weather-card-container">
-                <div class="card weather-card"><div><h3>గుంటూరు</h3><p>34°C, ఎండ</p></div><span class="material-icons">wb_sunny</span></div>
-            </div>
-            <div class="card" id="financial-card" style="display: none;">
-                <h3>ఆర్థిక సారాంశం</h3>
-                <div class="pie-chart-container">
-                    <div id="pie-chart"></div>
-                    <div id="pie-chart-legend"></div>
+                <div class="card weather-card">
+                    <div>
+                        <h3>గుంటూరు</h3>
+                        <p>34°C, ఎండగా ఉంది</p>
+                    </div>
+                    <span class="material-icons">wb_sunny</span>
                 </div>
-                <div id="financial-summary-totals"></div>
             </div>
-            <div id="summary-cards-container"></div>
+            <div class="card" id="financial-card">
+                <h3>ఆర్థిక సారాంశం</h3>
+                <div class="financial-display-flex">
+                    <div id="pie-chart-container">
+                    </div>
+                    <div id="financial-summary-text">
+                    </div>
+                </div>
+            </div>
+            <div id="summary-cards-container">
+            </div>
         </main>
     </div>
 
     <div id="my-farm-screen" class="screen">
-        <header class="app-header"><h2>నా పొలం</h2></header>
+        <header class="app-header"><h2>నా వ్యవసాయం</h2></header>
         <main id="my-farm-content" class="screen-content"></main>
     </div>
 
@@ -60,7 +68,7 @@
     </div>
 
     <div id="hire-screen" class="screen">
-        <header class="app-header"><h2>సేవలు/పరికరాలు</h2></header>
+        <header class="app-header"><h2>సేవలు & పరికరాలు</h2></header>
         <div class="tabs four-tabs">
             <button class="tab-btn active" data-filter="my-labour-posts">నా కూలీల పోస్టులు</button>
             <button class="tab-btn" data-filter="my-equipment-posts">నా పరికరాల పోస్టులు</button>
@@ -68,6 +76,17 @@
             <button class="tab-btn" data-filter="other-equipment-posts">ఇతర పరికరాల పనులు</button>
         </div>
         <main id="hire-content" class="screen-content with-tabs"></main>
+    </div>
+
+    <div id="market-prices-screen" class="screen">
+        <header class="app-header">
+            <h2>మార్కెట్ ధరలు</h2>
+            <div class="header-filters">
+                <button class="filter-btn active" data-sort="price">ధర ప్రకారం</button>
+                <button class="filter-btn" data-sort="market">మార్కెట్ ప్రకారం</button>
+            </div>
+        </header>
+        <main id="market-prices-content" class="screen-content with-tabs"></main>
     </div>
 
     <div id="schemes-screen" class="screen">
