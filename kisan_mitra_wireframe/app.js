@@ -1,10 +1,89 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- V15 - ROBUST CHAT SCROLL FIX ---
+    const uiStrings = {
+        // General
+        kisan_mitra: { te: 'కిసాన్ మిత్ర', en: 'Kisan Mitra' },
+        your_agri_assistant: { te: 'మీ వ్యవసాయ సహాయకుడు', en: 'Your Agri Assistant' },
+        // Login
+        enter_phone: { te: 'మీ ఫోన్ నంబర్ ఎంటర్ చేయండి', en: 'Enter your phone number' },
+        phone_placeholder: { te: 'ఉదా., 9876543210', en: 'e.g., 9876543210' },
+        login: { te: 'లాగిన్', en: 'Login' },
+        user_not_found: { te: 'వినియోగదారు కనుగొనబడలేదు!', en: 'User not found!' },
+        // Nav
+        nav_home: { te: 'హోమ్', en: 'Home' },
+        nav_my_farm: { te: 'నా పొలం', en: 'My Farm' },
+        nav_services: { te: 'సేవలు', en: 'Services' },
+        nav_schemes: { te: 'పథకాలు', en: 'Schemes' },
+        nav_profile: { te: 'ప్రొఫైల్', en: 'Profile' },
+        // Headers
+        my_farm: { te: 'నా వ్యవసాయం', en: 'My Farm' },
+        services_equipment: { te: 'సేవలు & పరికరాలు', en: 'Services & Equipment' },
+        market_prices: { te: 'మార్కెట్ ధరలు', en: 'Market Prices' },
+        govt_schemes: { te: 'ప్రభుత్వ పథకాలు', en: 'Govt Schemes' },
+        my_profile: { te: 'నా ప్రొఫైల్', en: 'My Profile' },
+        // Tabs & Filters
+        my_labour_posts: { te: 'నా కూలీల పోస్టులు', en: 'My Labour Posts' },
+        my_equipment_posts: { te: 'నా పరికరాల పోస్టులు', en: 'My Equipment Posts' },
+        other_labour_posts: { te: 'ఇతర కూలీల పనులు', en: 'Other Labour Jobs' },
+        other_equipment_posts: { te: 'ఇతర పరికరాల పనులు', en: 'Other Equipment Jobs' },
+        sort_by_price: { te: 'ధర ప్రకారం', en: 'By Price' },
+        sort_by_market: { te: 'మార్కెట్ ప్రకారం', en: 'By Market' },
+        // Home Screen
+        greeting: { te: 'నమస్కారం', en: 'Hello' },
+        financial_summary: { te: 'ఆర్థిక సారాంశం', en: 'Financial Summary' },
+        total_spent: { te: 'మొత్తం ఖర్చు', en: 'Total Spent' },
+        total_made: { te: 'మొత్తం ఆదాయం', en: 'Total Made' },
+        click_for_details: { te: 'విభాగంపై క్లిక్ చేయండి', en: 'Click a section for details' },
+        no_expenses: { te: 'ఖర్చులు లేవు', en: 'No expenses yet' },
+        estimated_profit_card_title: { te: '📈 అంచనా లాభం', en: '📈 Estimated Profit' },
+        estimated_revenue: { te: 'అంచనా ఆదాయం', en: 'Est. Revenue' },
+        estimated_profit: { te: 'అంచనా లాభం', en: 'Est. Profit' },
+        acres: { te: 'ఎకరాలు', en: 'Acres' },
+        my_labour_jobs: { te: 'నా కూలీ పనులు', en: 'My Labour Jobs' },
+        work_at_farm: { te: 'పొలంలో పని', en: 'Work at farm' },
+        // My Farm Screen
+        area: { te: 'విస్తీర్ణం', en: 'Area' },
+        status: { te: 'స్థితి', en: 'Status' },
+        profit: { te: 'లాభం', en: 'Profit' },
+        investment: { te: 'పెట్టుబడి', en: 'Investment' },
+        // Hire Screen
+        farmer: { te: 'రైతు', en: 'Farmer' },
+        location: { te: 'స్థానం', en: 'Location' },
+        per_day: { te: '/రోజుకి', en: '/day' },
+        price_negotiable: { te: 'ధర చర్చించదగినది', en: 'Price Negotiable' },
+        no_posts_found: { te: 'ఈ విభాగంలో పోస్ట్‌లు ఏవీ కనుగొనబడలేదు.', en: 'No posts found in this section.' },
+        // Schemes Screen
+        required_docs: { te: 'అవసరమైన పత్రాలు', en: 'Required Documents' },
+        no_eligible_schemes: { te: 'ప్రస్తుతం మీకు అర్హత ఉన్న పథకాలు ఏవీ లేవు.', en: 'No eligible schemes for you at this time.' },
+        talk_to_agent: { te: 'ఏజెంట్‌తో మాట్లాడండి', en: 'Talk to Agent' },
+        // Profile Screen
+        personal_details: { te: 'వ్యక్తిగత వివరాలు', en: 'Personal Details' },
+        name: { te: 'పేరు', en: 'Name' },
+        phone: { te: 'ఫోన్', en: 'Phone' },
+        income_sources: { te: 'ఆదాయ వనరులు', en: 'Income Sources' },
+        crop_sale: { te: 'పంట అమ్మకం', en: 'Crop Sale' },
+        labour_work: { te: 'కూలి పని', en: 'Labour Work' },
+        equipment_rental: { te: 'పరికరాల అద్దె', en: 'Equipment Rental' },
+        my_farms: { te: 'నా పొలాలు', en: 'My Farms' },
+        labour_profile: { te: 'కూలీ ప్రొఫైల్', en: 'Labour Profile' },
+        skills: { te: 'నైపుణ్యాలు', en: 'Skills' },
+        daily_rate: { te: 'రోజువారీ రేటు', en: 'Daily Rate' },
+        my_equipment: { te: 'నా పరికరాలు', en: 'My Equipment' },
+        // Chat
+        how_can_i_help: { te: 'పంటకు నేను ఎలా సహాయపడగలను?', en: 'How can I help with your crop?' },
+        diagnose_disease: { te: 'వ్యాధిని నిర్ధారించండి', en: 'Diagnose Disease' },
+        check_weather: { te: 'వాతావరణం తనిఖీ', en: 'Check Weather' },
+        check_market_price: { te: 'మార్కెట్ ధర', en: 'Market Price' },
+        post_for_labour: { te: 'కూలీల కోసం పోస్ట్ చేయండి', en: 'Post for Labour' },
+        govt_schemes_chat_title: { te: 'ప్రభుత్వ పథకాలు', en: 'Government Schemes' },
+        govt_schemes_greeting: { te: 'నమస్కారం! ప్రభుత్వ పథకాల గురించి నేను మీకు ఎలా సహాయపడగలను?', en: 'Hello! How can I help you with government schemes?' },
+        pm_kisan_apply_prompt: { te: 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?', en: 'How to apply for PM Kisan?' }
+    };
+
     const db = {
         users: [
             { _id: 'user_anjamma', phone: '9876543210', name: { te: 'అంజమ్మ', en: 'Anjamma' }, language: 'te', capabilities: ['FARM_OWNER', 'LABOURER', 'EQUIPMENT_OWNER'], docs: ['AADHAAR', 'BANK_PASSBOOK', 'LAND_RECORD'] },
-            { _id: 'user_ramarao', phone: '9876543211', name: { te: 'రామారావు', en: 'RamaRao' }, language: 'te', capabilities: ['FARM_OWNER', 'LABOURER'], docs: ['AADHAAR', 'BANK_PASSBOOK'] },
+            { _id: 'user_ramarao', phone: '9876543211', name: { te: 'రామారావు', en: 'RamaRao' }, language: 'en', capabilities: ['FARM_OWNER', 'LABOURER'], docs: ['AADHAAR', 'BANK_PASSBOOK'] },
             { _id: 'user_malli', phone: '9876543212', name: { te: 'మల్లికార్జున రావు', en: 'Malli Karjuna Rao' }, language: 'te', capabilities: ['EQUIPMENT_OWNER', 'FARM_OWNER'], docs: ['AADHAAR', 'BANK_PASSBOOK', 'LAND_RECORD'] },
             { _id: 'user_kaasamma', phone: '9876543213', name: { te: 'కాసమ్మ', en: 'Kaasamma' }, language: 'te', capabilities: ['LABOURER', 'LEADER'], docs: ['AADHAAR'] },
             { _id: 'user_subbarao', phone: '9876543214', name: { te: 'సుబ్బారావు', en: 'Subba Rao' }, language: 'te', capabilities: ['LABOURER'], docs: ['AADHAAR'] },
@@ -110,7 +189,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- APP STATE ---
     let currentUser = null;
     let currentCrop = null;
+    let currentLang = 'en'; // Default language
     let chatReturnScreen = 'home-screen';
+
+    // --- I18N (Internationalization) ---
+    const translateUI = (lang) => {
+        currentLang = lang;
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.dataset.translateKey;
+            if (uiStrings[key] && uiStrings[key][lang]) {
+                el.innerText = uiStrings[key][lang];
+            }
+        });
+        document.querySelectorAll('[data-translate-placeholder-key]').forEach(el => {
+            const key = el.dataset.translatePlaceholderKey;
+            if (uiStrings[key] && uiStrings[key][lang]) {
+                el.placeholder = uiStrings[key][lang];
+            }
+        });
+        document.getElementById('lang-te-btn').classList.toggle('active', lang === 'te');
+        document.getElementById('lang-en-btn').classList.toggle('active', lang === 'en');
+    };
 
     // --- DOM & NAVIGATION ---
     const screens = document.querySelectorAll('.screen');
@@ -121,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(screenId).classList.add('active');
         navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.screen === screenId));
         if (!currentUser) return;
+
         switch (screenId) {
             case 'home-screen': renderHomeScreen(); break;
             case 'my-farm-screen': renderMyFarmScreen(); break;
@@ -134,6 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- FINANCIAL LOGIC ---
     const calculateFinancials = (userId) => {
+        const lang = currentUser.language;
         const financials = {
             spent: { total: 0, byCategory: {} },
             made: { total: 0, byCategory: { CROP_SALE: 0, LABOUR_WORK: 0, EQUIPMENT_RENTAL: 0 } }
@@ -143,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ci.expenses.forEach(exp => {
                 const categoryKey = exp.category.en.toUpperCase().replace(' & ', '_');
                 if (!financials.spent.byCategory[categoryKey]) {
-                    financials.spent.byCategory[categoryKey] = { amount: 0, name: exp.category.te };
+                    financials.spent.byCategory[categoryKey] = { amount: 0, name: exp.category[lang] };
                 }
                 financials.spent.byCategory[categoryKey].amount += exp.amount;
             });
@@ -168,25 +269,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const chartContainer = document.getElementById('pie-chart-container');
         const summaryEl = document.getElementById('financial-summary-text');
         const financialCard = document.getElementById('financial-card');
+        const lang = currentUser.language;
 
         chartContainer.innerHTML = '';
         summaryEl.innerHTML = `
             <div class="financial-total spent">
-                <span>మొత్తం ఖర్చు</span>
+                <span>${uiStrings.total_spent[lang]}</span>
                 <strong>₹${financials.spent.total.toLocaleString('en-IN')}</strong>
             </div>
             <div class="financial-total made">
-                <span>మొత్తం ఆదాయం</span>
+                <span>${uiStrings.total_made[lang]}</span>
                 <strong>₹${financials.made.total.toLocaleString('en-IN')}</strong>
             </div>
-            <div id="pie-tooltip" class="pie-tooltip">విభాగంపై క్లిక్ చేయండి</div>`;
+            <div id="pie-tooltip" class="pie-tooltip">${uiStrings.click_for_details[lang]}</div>`;
 
         financialCard.style.display = (financials.spent.total > 0 || financials.made.total > 0) ? 'block' : 'none';
 
         const tooltip = document.getElementById('pie-tooltip');
         const data = financials.spent.byCategory;
         if (financials.spent.total === 0) {
-            tooltip.innerText = 'ఖర్చులు లేవు';
+            tooltip.innerText = uiStrings.no_expenses[lang];
             return;
         }
 
@@ -227,10 +329,21 @@ document.addEventListener('DOMContentLoaded', () => {
         chartContainer.appendChild(svg);
     };
 
-    // --- RENDER FUNCTIONS ---
+    // --- RENDER FUNCTIONS (NOW LANGUAGE-AWARE) ---
     const renderHomeScreen = () => {
         const lang = currentUser.language;
-        document.getElementById('welcome-message').innerText = `నమస్కారం, ${currentUser.name[lang]}`;
+        document.getElementById('welcome-message').innerText = `${uiStrings.greeting[lang]}, ${currentUser.name[lang]}`;
+
+        // Fake weather card
+        document.getElementById('weather-card-container').innerHTML = `
+         <div class="card weather-card">
+            <div>
+                <h3>Guntur</h3>
+                <p>34°C, Sunny</p>
+            </div>
+            <span class="material-icons">wb_sunny</span>
+        </div>`;
+
         const financials = calculateFinancials(currentUser._id);
         renderPieChart(financials);
 
@@ -239,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const unsoldCrops = db.cropInstances.filter(ci => ci.userId === currentUser._id && ci.status.en !== 'Sold');
         if (unsoldCrops.length > 0) {
-            let profitHtml = '<div class="card profit-card"><h3>📈 అంచనా లాభం</h3>';
+            let profitHtml = `<div class="card profit-card"><h3>${uiStrings.estimated_profit_card_title[lang]}</h3>`;
             unsoldCrops.forEach(ci => {
                 const cropInfo = db.crops.find(c => c._id === ci.cropMasterId);
                 const marketPriceInfo = db.marketPrices.filter(p => p.cropMasterId === ci.cropMasterId);
@@ -252,9 +365,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const potentialProfit = potentialRevenue - currentExpenses;
 
                 profitHtml += `<div class="profit-item">
-                    <h4>${cropInfo.emoji} ${cropInfo.name.te} (${ci.areaSownInAcres} ఎకరాలు)</h4>
-                    <p>అంచనా ఆదాయం: ₹${potentialRevenue.toLocaleString('en-IN')}</p>
-                    <p class="profit-value">అంచనా లాభం: <strong>₹${potentialProfit.toLocaleString('en-IN')}</strong></p>
+                    <h4>${cropInfo.emoji} ${cropInfo.name[lang]} (${ci.areaSownInAcres} ${uiStrings.acres[lang]})</h4>
+                    <p>${uiStrings.estimated_revenue[lang]}: ₹${potentialRevenue.toLocaleString('en-IN')}</p>
+                    <p class="profit-value">${uiStrings.estimated_profit[lang]}: <strong>₹${potentialProfit.toLocaleString('en-IN')}</strong></p>
                 </div>`;
             });
             profitHtml += '</div>';
@@ -263,10 +376,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const labourSchedule = db.schedules.filter(s => s.resourceId === currentUser._id && s.resourceType === 'LABOUR');
         if (labourSchedule.length > 0) {
-            let labourHTML = '<div class="card"><h3>నా కూలీ పనులు</h3><ul>';
+            let labourHTML = `<div class="card"><h3>${uiStrings.my_labour_jobs[lang]}</h3><ul>`;
             labourSchedule.forEach(s => {
                 const farmer = db.users.find(u => u._id === s.farmerId);
-                labourHTML += `<li>${farmer.name[lang]} పొలంలో పని (${new Date(s.startTime).toLocaleDateString('te-IN')})</li>`;
+                labourHTML += `<li>${uiStrings.work_at_farm[lang]} ${farmer.name[lang]} (${new Date(s.startTime).toLocaleDateString(lang === 'te' ? 'te-IN' : 'en-GB')})</li>`;
             });
             labourHTML += '</ul></div>';
             summaryContainer.innerHTML += labourHTML;
@@ -275,6 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderMyFarmScreen = () => {
         const content = document.getElementById('my-farm-content');
+        const lang = currentUser.language;
         content.innerHTML = '';
         db.cropInstances.filter(ci => ci.userId === currentUser._id).forEach(ci => {
             const cropInfo = db.crops.find(c => c._id === ci.cropMasterId);
@@ -285,16 +399,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ci.status.en === 'Sold') {
                 const profit = ci.revenue - totalExpenses;
                 const profitClass = profit >= 0 ? 'profit' : 'investment';
-                financialInfoHtml = `<p class="${profitClass}">లాభం: ₹${profit.toLocaleString('en-IN')}</p>`;
+                financialInfoHtml = `<p class="${profitClass}">${uiStrings.profit[lang]}: ₹${profit.toLocaleString('en-IN')}</p>`;
             } else {
-                financialInfoHtml = `<p>పెట్టుబడి: ₹${totalExpenses.toLocaleString('en-IN')}</p>`;
+                financialInfoHtml = `<p>${uiStrings.investment[lang]}: ₹${totalExpenses.toLocaleString('en-IN')}</p>`;
             }
 
             content.innerHTML += `<div class="card card-flex clickable" data-crop-id="${ci._id}">
                     <span class="card-emoji">${cropInfo.emoji}</span>
                     <div class="crop-details">
-                        <h3>${cropInfo.name.te} - ${farmInfo.farmName.te}</h3>
-                        <p>విస్తీర్ణం: ${ci.areaSownInAcres} ఎకరాలు | స్థితి: ${ci.status.te}</p>
+                        <h3>${cropInfo.name[lang]} - ${farmInfo.farmName[lang]}</h3>
+                        <p>${uiStrings.area[lang]}: ${ci.areaSownInAcres} ${uiStrings.acres[lang]} | ${uiStrings.status[lang]}: ${ci.status[lang]}</p>
                         ${financialInfoHtml}
                     </div>
                     <div class="status-dot ${ci.status.en.toLowerCase()}"></div></div>`;
@@ -304,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderHireScreen = (filter = 'other-labour-posts') => {
         const hireContent = document.getElementById('hire-content');
+        const lang = currentUser.language;
         let postsToDisplay = [];
         switch(filter) {
             case 'my-labour-posts': postsToDisplay = db.postings.filter(p => p.type === 'NEEDS_LABOUR' && p.postedByUserId === currentUser._id); break;
@@ -316,16 +431,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const farmer = db.users.find(u => u._id === post.postedByUserId);
                 return `<div class="card hire-card">
                             <div>
-                                <h3>${post.details.task.te}</h3>
-                                <p>రైతు: ${farmer.name.te} | స్థానం: ${post.location.address}</p>
+                                <h3>${post.details.task[lang]}</h3>
+                                <p>${uiStrings.farmer[lang]}: ${farmer.name[lang]} | ${uiStrings.location[lang]}: ${post.location.address}</p>
                             </div>
                             <div class="rate-info">
-                                ${post.details.offeredRatePerDay ? `<strong>₹${post.details.offeredRatePerDay}</strong><span>/రోజుకి</span>` : '<span>ధర చర్చించదగినది</span>'}
+                                ${post.details.offeredRatePerDay ? `<strong>₹${post.details.offeredRatePerDay}</strong><span>${uiStrings.per_day[lang]}</span>` : `<span>${uiStrings.price_negotiable[lang]}</span>`}
                             </div>
                         </div>`;
             }).join('');
         } else {
-            hireContent.innerHTML = `<div class="card"><p>ఈ విభాగంలో పోస్ట్‌లు ఏవీ కనుగొనబడలేదు.</p></div>`;
+            hireContent.innerHTML = `<div class="card"><p>${uiStrings.no_posts_found[lang]}</p></div>`;
         }
         document.querySelectorAll('#hire-screen .tab-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.filter === filter);
@@ -359,15 +474,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderSchemesScreen = () => {
         const content = document.getElementById('schemes-content');
+        const lang = currentUser.language;
         const totalAcres = db.farms.filter(f => f.userId === currentUser._id).reduce((sum, farm) => sum + farm.acres, 0);
         const userDocs = currentUser.docs;
         const eligibleSchemes = db.governmentSchemes.filter(scheme => totalAcres <= scheme.eligibility.maxAcres);
         if (eligibleSchemes.length > 0) {
-            content.innerHTML = eligibleSchemes.map(scheme => `<div class="card scheme-card"><h3>${scheme.name.te}</h3><p>${scheme.description.te}</p><h4>అవసరమైన పత్రాలు:</h4><ul class="doc-list">${scheme.requiredDocs.map(doc => `<li class="${userDocs.includes(doc.id) ? 'has-doc' : 'needs-doc'}">${doc.name.te} <span>${userDocs.includes(doc.id) ? '✅' : '❌'}</span></li>`).join('')}</ul></div>`).join('');
+            content.innerHTML = eligibleSchemes.map(scheme => `<div class="card scheme-card"><h3>${scheme.name[lang]}</h3><p>${scheme.description[lang]}</p><h4>${uiStrings.required_docs[lang]}:</h4><ul class="doc-list">${scheme.requiredDocs.map(doc => `<li class="${userDocs.includes(doc.id) ? 'has-doc' : 'needs-doc'}">${doc.name[lang]} <span>${userDocs.includes(doc.id) ? '✅' : '❌'}</span></li>`).join('')}</ul></div>`).join('');
         } else {
-            content.innerHTML = `<div class="card"><p>ప్రస్తుతం మీకు అర్హత ఉన్న పథకాలు ఏవీ లేవు.</p></div>`;
+            content.innerHTML = `<div class="card"><p>${uiStrings.no_eligible_schemes[lang]}</p></div>`;
         }
-        content.innerHTML += `<button id="scheme-chat-btn" class="chat-now-btn">ఏజెంట్‌తో మాట్లాడండి</button>`;
+        content.innerHTML += `<button id="scheme-chat-btn" class="chat-now-btn">${uiStrings.talk_to_agent[lang]}</button>`;
         document.getElementById('scheme-chat-btn').onclick = startSchemeChat;
     };
 
@@ -381,20 +497,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const equipmentProfile = db.equipment.filter(eq => eq.userId === currentUser._id);
 
         content.innerHTML = `
-            <div class="card profile-section"><h3>వ్యక్తిగత వివరాలు</h3><p>పేరు: ${currentUser.name[lang]}</p><p>ఫోన్: ${currentUser.phone}</p></div>
+            <div class="card profile-section"><h3>${uiStrings.personal_details[lang]}</h3><p>${uiStrings.name[lang]}: ${currentUser.name[lang]}</p><p>${uiStrings.phone[lang]}: ${currentUser.phone}</p></div>
             <div class="card profile-section">
-                <h3>ఆర్థిక సారాంశం</h3>
-                <p class="investment">మొత్తం ఖర్చు: ₹${financials.spent.total.toLocaleString('en-IN')}</p>
-                <p class="profit">మొత్తం ఆదాయం: ₹${financials.made.total.toLocaleString('en-IN')}</p>
+                <h3>${uiStrings.financial_summary[lang]}</h3>
+                <p class="investment">${uiStrings.total_spent[lang]}: ₹${financials.spent.total.toLocaleString('en-IN')}</p>
+                <p class="profit">${uiStrings.total_made[lang]}: ₹${financials.made.total.toLocaleString('en-IN')}</p>
                 <hr>
-                <h4>ఆదాయ వనరులు:</h4>
-                <p>పంట అమ్మకం: ₹${financials.made.byCategory.CROP_SALE.toLocaleString('en-IN')}</p>
-                <p>కూలి పని: ₹${financials.made.byCategory.LABOUR_WORK.toLocaleString('en-IN')}</p>
-                <p>పరికరాల అద్దె: ₹${financials.made.byCategory.EQUIPMENT_RENTAL.toLocaleString('en-IN')}</p>
+                <h4>${uiStrings.income_sources[lang]}:</h4>
+                <p>${uiStrings.crop_sale[lang]}: ₹${financials.made.byCategory.CROP_SALE.toLocaleString('en-IN')}</p>
+                <p>${uiStrings.labour_work[lang]}: ₹${financials.made.byCategory.LABOUR_WORK.toLocaleString('en-IN')}</p>
+                <p>${uiStrings.equipment_rental[lang]}: ₹${financials.made.byCategory.EQUIPMENT_RENTAL.toLocaleString('en-IN')}</p>
             </div>
-            ${userFarms.length > 0 ? `<div class="card profile-section"><h3>నా పొలాలు</h3><ul>${userFarms.map(f => `<li>${f.farmName[lang]} (${f.acres} ఎకరాలు)</li>`).join('')}</ul></div>` : ''}
-            ${labourProfile ? `<div class="card profile-section"><h3>కూలీ ప్రొఫైల్</h3><p>నైపుణ్యాలు: ${labourProfile.skills.map(s => s[lang]).join(', ')}</p><p>రోజువారీ రేటు: ₹${labourProfile.ratePerDay}</p></div>` : ''}
-            ${equipmentProfile.length > 0 ? `<div class="card profile-section"><h3>నా పరికరాలు</h3><ul>${equipmentProfile.map(eq => `<li>${eq.type[lang]}</li>`).join('')}</ul></div>` : ''}
+            ${userFarms.length > 0 ? `<div class="card profile-section"><h3>${uiStrings.my_farms[lang]}</h3><ul>${userFarms.map(f => `<li>${f.farmName[lang]} (${f.acres} ${uiStrings.acres[lang]})</li>`).join('')}</ul></div>` : ''}
+            ${labourProfile ? `<div class="card profile-section"><h3>${uiStrings.labour_profile[lang]}</h3><p>${uiStrings.skills[lang]}: ${labourProfile.skills.map(s => s[lang]).join(', ')}</p><p>${uiStrings.daily_rate[lang]}: ₹${labourProfile.ratePerDay}</p></div>` : ''}
+            ${equipmentProfile.length > 0 ? `<div class="card profile-section"><h3>${uiStrings.my_equipment[lang]}</h3><ul>${equipmentProfile.map(eq => `<li>${eq.type[lang]}</li>`).join('')}</ul></div>` : ''}
         `;
     };
 
@@ -423,35 +539,35 @@ document.addEventListener('DOMContentLoaded', () => {
             bubble.innerHTML = content;
         }
         chatLog.appendChild(bubble);
-
-        // ROBUST SCROLL FIX: Use scrollIntoView on the new bubble itself.
         bubble.scrollIntoView({behavior: "smooth", block: "end"});
     };
 
     const startFarmChat = (cropInstanceId) => {
+        const lang = currentUser.language;
         chatReturnScreen = 'my-farm-screen';
         currentCrop = db.cropInstances.find(ci => ci._id === cropInstanceId);
         const cropInfo = db.crops.find(c => c._id === currentCrop.cropMasterId);
-        document.getElementById('chat-title').innerText = `${cropInfo.name.te} ${cropInfo.emoji}`;
+        document.getElementById('chat-title').innerText = `${cropInfo.name[lang]} ${cropInfo.emoji}`;
         chatLog.innerHTML = '';
         navigateTo('farm-chat-screen');
-        setTimeout(() => addChatMessage('agent', `నమస్కారం! మీ ${cropInfo.name.te} పంటకు నేను ఎలా సహాయపడగలను?`), 500);
+        setTimeout(() => addChatMessage('agent', `${uiStrings.greeting[lang]}! ${cropInfo.name[lang]} ${uiStrings.how_can_i_help[lang]}`), 500);
         setTimeout(() => addChatMessage('user', '', 'options', [
-            {text: 'వ్యాధిని నిర్ధారించండి', action: 'diagnose-start'},
-            {text: 'వాతావరణం తనిఖీ', action: 'check-weather'},
-            {text: 'మార్కెట్ ధర', action: 'check-price'},
-            {text: 'కూలీల కోసం పోస్ట్ చేయండి', action: 'post-labour'},
+            {text: uiStrings.diagnose_disease[lang], action: 'diagnose-start'},
+            {text: uiStrings.check_weather[lang], action: 'check-weather'},
+            {text: uiStrings.check_market_price[lang], action: 'check-price'},
+            {text: uiStrings.post_for_labour[lang], action: 'post-labour'},
         ]), 1500);
     };
 
     const startSchemeChat = () => {
+        const lang = currentUser.language;
         chatReturnScreen = 'schemes-screen';
-        document.getElementById('chat-title').innerText = 'ప్రభుత్వ పథకాలు';
+        document.getElementById('chat-title').innerText = uiStrings.govt_schemes_chat_title[lang];
         chatLog.innerHTML = '';
         navigateTo('farm-chat-screen');
-        setTimeout(() => addChatMessage('agent', 'నమస్కారం! ప్రభుత్వ పథకాల గురించి నేను మీకు ఎలా సహాయపడగలను?'), 500);
+        setTimeout(() => addChatMessage('agent', uiStrings.govt_schemes_greeting[lang]), 500);
         setTimeout(() => addChatMessage('user', '', 'options', [{
-            text: 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?',
+            text: uiStrings.pm_kisan_apply_prompt[lang],
             action: 'scheme-apply-pmkisan'
         }]), 1500);
     };
@@ -459,12 +575,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleChatOption = (action) => {
         const optionsContainer = document.querySelector('.chat-options-container');
         if (optionsContainer) optionsContainer.parentElement.remove();
+
+        const lang = currentUser.language;
         const actionTextMap = {
-            'diagnose-start': 'వ్యాధిని నిర్ధారించండి',
-            'check-price': 'మార్కెట్ ధర',
-            'post-labour': 'కూలీల కోసం పోస్ట్ చేయండి',
-            'find-jobs': 'అందుబాటులో ఉన్న పనులు',
-            'scheme-apply-pmkisan': 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?'
+            'diagnose-start': uiStrings.diagnose_disease[lang],
+            'check-price': uiStrings.check_market_price[lang],
+            'post-labour': uiStrings.post_for_labour[lang],
+            'scheme-apply-pmkisan': uiStrings.pm_kisan_apply_prompt[lang]
         };
         if (actionTextMap[action]) addChatMessage('user', actionTextMap[action]);
 
@@ -504,15 +621,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INITIALIZATION ---
     document.getElementById('back-from-chat-btn').addEventListener('click', () => navigateTo(chatReturnScreen));
 
+    document.getElementById('lang-en-btn').addEventListener('click', () => translateUI('en'));
+    document.getElementById('lang-te-btn').addEventListener('click', () => translateUI('te'));
+
     document.getElementById('login-btn').addEventListener('click', () => {
         const phone = document.getElementById('phone').value;
-        currentUser = db.users.find(user => user.phone === phone);
-        if (currentUser) {
-            navigateTo('home-screen');
+        const user = db.users.find(u => u.phone === phone);
+        if (user) {
+            currentUser = user;
+            currentUser.language = currentLang; // Set user language based on login screen selection
+
+            translateUI(currentUser.language); // Translate the entire app shell once
+            navigateTo('home-screen'); // Navigate to the home screen
         } else {
-            alert('User not found!');
+            alert(uiStrings.user_not_found[currentLang]);
         }
     });
 
+    // Initial load
+    translateUI(currentLang); // Translate login screen to default language
     navigateTo('login-screen');
 });

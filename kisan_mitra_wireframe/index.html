@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +16,17 @@
     <div id="login-screen" class="screen active">
         <div class="login-header">
             <span class="material-icons logo-icon">agriculture</span>
-            <h1>కిసాన్ మిత్ర</h1>
-            <p>మీ వ్యవసాయ సహాయకుడు</p>
+            <h1 data-translate-key="kisan_mitra"></h1>
+            <p data-translate-key="your_agri_assistant"></p>
         </div>
         <div class="login-form">
-            <label for="phone">మీ ఫోన్ నంబర్ ఎంటర్ చేయండి</label>
-            <input type="tel" id="phone" value="9876543210" placeholder="e.g., 9876543210">
-            <button id="login-btn">లాగిన్</button>
+            <label for="phone" data-translate-key="enter_phone"></label>
+            <input type="tel" id="phone" value="9876543210" data-translate-placeholder-key="phone_placeholder">
+            <button id="login-btn" data-translate-key="login"></button>
+        </div>
+        <div class="language-selector">
+            <button id="lang-en-btn">English</button>
+            <button id="lang-te-btn" class="active">తెలుగు</button>
         </div>
     </div>
 
@@ -32,16 +36,9 @@
         </header>
         <main class="screen-content">
             <div id="weather-card-container">
-                <div class="card weather-card">
-                    <div>
-                        <h3>గుంటూరు</h3>
-                        <p>34°C, ఎండగా ఉంది</p>
-                    </div>
-                    <span class="material-icons">wb_sunny</span>
-                </div>
             </div>
             <div class="card" id="financial-card">
-                <h3>ఆర్థిక సారాంశం</h3>
+                <h3 data-translate-key="financial_summary"></h3>
                 <div class="financial-display-flex">
                     <div id="pie-chart-container">
                     </div>
@@ -55,7 +52,7 @@
     </div>
 
     <div id="my-farm-screen" class="screen">
-        <header class="app-header"><h2>నా వ్యవసాయం</h2></header>
+        <header class="app-header"><h2 data-translate-key="my_farm"></h2></header>
         <main id="my-farm-content" class="screen-content"></main>
     </div>
 
@@ -68,57 +65,57 @@
     </div>
 
     <div id="hire-screen" class="screen">
-        <header class="app-header"><h2>సేవలు & పరికరాలు</h2></header>
+        <header class="app-header"><h2 data-translate-key="services_equipment"></h2></header>
         <div class="tabs four-tabs">
-            <button class="tab-btn active" data-filter="my-labour-posts">నా కూలీల పోస్టులు</button>
-            <button class="tab-btn" data-filter="my-equipment-posts">నా పరికరాల పోస్టులు</button>
-            <button class="tab-btn" data-filter="other-labour-posts">ఇతర కూలీల పనులు</button>
-            <button class="tab-btn" data-filter="other-equipment-posts">ఇతర పరికరాల పనులు</button>
+            <button class="tab-btn active" data-filter="my-labour-posts" data-translate-key="my_labour_posts"></button>
+            <button class="tab-btn" data-filter="my-equipment-posts" data-translate-key="my_equipment_posts"></button>
+            <button class="tab-btn" data-filter="other-labour-posts" data-translate-key="other_labour_posts"></button>
+            <button class="tab-btn" data-filter="other-equipment-posts" data-translate-key="other_equipment_posts"></button>
         </div>
         <main id="hire-content" class="screen-content with-tabs"></main>
     </div>
 
     <div id="market-prices-screen" class="screen">
         <header class="app-header">
-            <h2>మార్కెట్ ధరలు</h2>
+            <h2 data-translate-key="market_prices"></h2>
             <div class="header-filters">
-                <button class="filter-btn active" data-sort="price">ధర ప్రకారం</button>
-                <button class="filter-btn" data-sort="market">మార్కెట్ ప్రకారం</button>
+                <button class="filter-btn active" data-sort="price" data-translate-key="sort_by_price"></button>
+                <button class="filter-btn" data-sort="market" data-translate-key="sort_by_market"></button>
             </div>
         </header>
         <main id="market-prices-content" class="screen-content with-tabs"></main>
     </div>
 
     <div id="schemes-screen" class="screen">
-        <header class="app-header"><h2>ప్రభుత్వ పథకాలు</h2></header>
+        <header class="app-header"><h2 data-translate-key="govt_schemes"></h2></header>
         <main id="schemes-content" class="screen-content"></main>
     </div>
 
     <div id="profile-screen" class="screen">
-        <header class="app-header"><h2>నా ప్రొఫైల్</h2></header>
+        <header class="app-header"><h2 data-translate-key="my_profile"></h2></header>
         <main id="profile-content" class="screen-content"></main>
     </div>
 
     <nav id="bottom-nav">
         <button class="nav-btn active" data-screen="home-screen">
             <span class="material-icons">home</span>
-            <span>హోమ్</span>
+            <span data-translate-key="nav_home"></span>
         </button>
         <button class="nav-btn" data-screen="my-farm-screen">
             <span class="material-icons">grass</span>
-            <span>నా పొలం</span>
+            <span data-translate-key="nav_my_farm"></span>
         </button>
         <button class="nav-btn" data-screen="hire-screen">
             <span class="material-icons">engineering</span>
-            <span>సేవలు</span>
+            <span data-translate-key="nav_services"></span>
         </button>
         <button class="nav-btn" data-screen="schemes-screen">
             <span class="material-icons">account_balance</span>
-            <span>పథకాలు</span>
+            <span data-translate-key="nav_schemes"></span>
         </button>
         <button class="nav-btn" data-screen="profile-screen">
             <span class="material-icons">person</span>
-            <span>ప్రొఫైల్</span>
+            <span data-translate-key="nav_profile"></span>
         </button>
     </nav>
 </div>
