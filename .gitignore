@@ -1,0 +1,15 @@
+# Ignore node modules and system files
+node_modules/
+.env
+package-lock.json
+
+# Ignore logs and temp files
+*.log
+.DS_Store
+
+# Chalice / deployment-specific (if relevant)
+.chalice/deployments/
+.chalice/venv/
+.chalice/deployed
+__pycache__/
+.idea
