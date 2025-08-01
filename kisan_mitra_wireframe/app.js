@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         acres: { te: 'ఎకరాలు', en: 'Acres' },
         my_labour_jobs: { te: 'నా కూలీ పనులు', en: 'My Labour Jobs' },
         work_at_farm: { te: 'పొలంలో పని', en: 'Work at farm' },
+        my_schedule: { te: 'నా షెడ్యూల్', en: 'My Schedule' },
         // My Farm Screen
         area: { te: 'విస్తీర్ణం', en: 'Area' },
         status: { te: 'స్థితి', en: 'Status' },
@@ -77,7 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
         post_for_labour: { te: 'కూలీల కోసం పోస్ట్ చేయండి', en: 'Post for Labour' },
         govt_schemes_chat_title: { te: 'ప్రభుత్వ పథకాలు', en: 'Government Schemes' },
         govt_schemes_greeting: { te: 'నమస్కారం! ప్రభుత్వ పథకాల గురించి నేను మీకు ఎలా సహాయపడగలను?', en: 'Hello! How can I help you with government schemes?' },
-        pm_kisan_apply_prompt: { te: 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?', en: 'How to apply for PM Kisan?' }
+        pm_kisan_apply_prompt: { te: 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?', en: 'How to apply for PM Kisan?' },
+        // ** NEW CHAT TRANSLATIONS **
+        chat_diagnose_start_prompt: { te: 'తప్పకుండా. దయచేసి వ్యాధి సోకిన ఆకు యొక్క స్పష్టమైన ఫోటోను అప్‌లోడ్ చేయండి.', en: 'Certainly. Please upload a clear photo of the affected leaf.' },
+        chat_upload_photo_option: { te: 'ఫోటో అప్‌లోడ్ చేయండి', en: 'Upload Photo' },
+        chat_analyzing_photo: { te: 'ఫోటోను విశ్లేషిస్తున్నాను...', en: 'Analyzing the photo...' },
+        chat_disease_result_leaf_curl: { te: 'ఇది <strong>మిర్చి ఆకు ముడత (Chilli Leaf Curl)</strong> లా కనిపిస్తోంది. నివారణకు, లీటరు నీటికి 0.5ml <strong>ఇమిడాక్లోప్రిడ్</strong> కలిపి పిచికారీ చేయండి.', en: 'This looks like <strong>Chilli Leaf Curl</strong>. For treatment, spray <strong>Imidacloprid</strong> at 0.5ml per liter of water.' },
+        chat_price_info: { te: `ప్రస్తుతం మీ పంటకు గరిష్ట ధర ₹{price}/క్వింటాల్ వరకు ఉంది.`, en: `The current maximum price for your crop is ₹{price}/quintal.` },
+        chat_price_not_found: { te: 'క్షమించండి, ఈ పంటకు మార్కెట్ ధర సమాచారం అందుబాటులో లేదు.', en: 'Sorry, market price information is not available for this crop.' },
+        chat_post_labour_confirm: { te: 'తప్పకుండా. నేను మీ కోసం ఒక కూలీల అవసరం పోస్ట్ సృష్టిస్తాను. వివరాలు నిర్ధారించండి.', en: 'Of course. I will create a post for your labour requirement. Please confirm the details.' },
+        chat_scheme_apply_info_pmkisan: { te: 'మీరు మీ సమీప మీసేవ కేంద్రానికి వెళ్లి, మీ ఆధార్ కార్డు, బ్యాంక్ పాస్‌బుక్, మరియు భూమి రికార్డులతో దరఖాస్తు చేసుకోవచ్చు.', en: 'You can apply at your nearest MeeSeva center with your Aadhaar card, Bank Passbook, and Land Record.' }
     };
 
     const db = {
@@ -153,12 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
             { _id: 'group_ranga', name: { te: "రంగా బృందం", en: "Ranga Team" }, leaderId: 'user_ranga', members: ['user_ranga', 'user_sreenu'] }
         ],
         postings: [
-            { _id: 'post_anjamma_1', postedByUserId: 'user_anjamma', type: 'NEEDS_LABOUR', details: { cropInstanceId: 'ci_anjamma_mirchi', task: { te: 'మిర్చి కోతకు 5 మంది కావాలి', en: 'Need 5 for chilli picking' }, requiredCount: 5, offeredRatePerDay: 580 }, location: { address: 'రోడ్ దగ్గర పొలం' }, status: 'OPEN' },
-            { _id: 'post_ramarao_1', postedByUserId: 'user_ramarao', type: 'NEEDS_EQUIPMENT', details: { task: { te: 'దుక్కి దున్నడానికి టిల్లర్ కావాలి', en: 'Need tiller for ploughing' } }, location: { address: 'నది పక్కన భూమి' }, status: 'FILLED' },
-            { _id: 'post_malli_1', postedByUserId: 'user_malli', type: 'NEEDS_LABOUR', details: { task: { te: 'వరి కోతకు 10 మంది కావాలి', en: 'Need 10 for Paddy Harvesting' }, requiredCount: 10, offeredRatePerDay: 620 }, location: { address: 'జనపాడు దగ్గర పొలం' }, status: 'FILLED' },
-            { _id: 'post_venkanna_1', postedByUserId: 'user_venkanna', type: 'NEEDS_LABOUR', details: { task: { te: 'కలుపు తీయుటకు 4 గురు కావాలి', en: 'Need 4 for weeding' }, requiredCount: 4, offeredRatePerDay: 530 }, location: { address: 'కొత్త పొలం' }, status: 'OPEN' },
-            { _id: 'post_ramarao_2', postedByUserId: 'user_ramarao', type: 'NEEDS_LABOUR', details: { task: { te: 'వరి నాట్లకు 8 మంది కావాలి', en: 'Need 8 for Paddy Planting' }, requiredCount: 8, offeredRatePerDay: 600 }, location: { address: 'నది పక్కన భూమి' }, status: 'OPEN' },
-            { _id: 'post_venkanna_2', postedByUserId: 'user_venkanna', type: 'NEEDS_EQUIPMENT', details: { task: { te: 'పంట స్ప్రే చేయడానికి ట్రాక్టర్ కావాలి', en: 'Need tractor for spraying' } }, location: { address: 'కొత్త పొలం' }, status: 'OPEN' },
+            { _id: 'post_anjamma_1', postedByUserId: 'user_anjamma', type: 'NEEDS_LABOUR', details: { cropInstanceId: 'ci_anjamma_mirchi', task: { te: 'మిర్చి కోతకు 5 మంది కావాలి', en: 'Need 5 for chilli picking' }, requiredCount: 5, offeredRatePerDay: 580 }, location: { address: { te: 'రోడ్ దగ్గర పొలం', en: 'Road-side Farm' } }, status: 'OPEN' },
+            { _id: 'post_ramarao_1', postedByUserId: 'user_ramarao', type: 'NEEDS_EQUIPMENT', details: { task: { te: 'దుక్కి దున్నడానికి టిల్లర్ కావాలి', en: 'Need tiller for ploughing' } }, location: { address: { te: 'నది పక్కన భూమి', en: 'Land near River' } }, status: 'FILLED' },
+            { _id: 'post_malli_1', postedByUserId: 'user_malli', type: 'NEEDS_LABOUR', details: { task: { te: 'వరి కోతకు 10 మంది కావాలి', en: 'Need 10 for Paddy Harvesting' }, requiredCount: 10, offeredRatePerDay: 620 }, location: { address: { te: 'జనపాడు దగ్గర పొలం', en: 'Farm near Janapadu' } }, status: 'FILLED' },
+            { _id: 'post_venkanna_1', postedByUserId: 'user_venkanna', type: 'NEEDS_LABOUR', details: { task: { te: 'కలుపు తీయుటకు 4 గురు కావాలి', en: 'Need 4 for weeding' }, requiredCount: 4, offeredRatePerDay: 530 }, location: { address: { te: 'కొత్త పొలం', en: 'New Farm' } }, status: 'OPEN' },
+            { _id: 'post_ramarao_2', postedByUserId: 'user_ramarao', type: 'NEEDS_LABOUR', details: { task: { te: 'వరి నాట్లకు 8 మంది కావాలి', en: 'Need 8 for Paddy Planting' }, requiredCount: 8, offeredRatePerDay: 600 }, location: { address: { te: 'నది పక్కన భూమి', en: 'Land near River' } }, status: 'OPEN' },
+            { _id: 'post_venkanna_2', postedByUserId: 'user_venkanna', type: 'NEEDS_EQUIPMENT', details: { task: { te: 'పంట స్ప్రే చేయడానికి ట్రాక్టర్ కావాలి', en: 'Need tractor for spraying' } }, location: { address: { te: 'కొత్త పొలం', en: 'New Farm' } }, status: 'OPEN' },
         ],
         bookings: [
             { _id: 'booking_1', postingId: 'post_ramarao_1', farmerId: 'user_ramarao', providerId: 'user_anjamma', resourceId: 'equip_anjamma_tiller', resourceType: 'EQUIPMENT', status: 'COMPLETED', totalCost: 8000 },
@@ -336,13 +346,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Fake weather card
         document.getElementById('weather-card-container').innerHTML = `
-         <div class="card weather-card">
-            <div>
-                <h3>Guntur</h3>
-                <p>34°C, Sunny</p>
-            </div>
-            <span class="material-icons">wb_sunny</span>
-        </div>`;
+     <div class="card weather-card">
+        <div>
+            <h3>Guntur</h3>
+            <p>34°C, Sunny</p>
+        </div>
+        <span class="material-icons">wb_sunny</span>
+    </div>`;
 
         const financials = calculateFinancials(currentUser._id);
         renderPieChart(financials);
@@ -350,6 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const summaryContainer = document.getElementById('summary-cards-container');
         summaryContainer.innerHTML = '';
 
+        // Renders the estimated profit card for unsold crops
         const unsoldCrops = db.cropInstances.filter(ci => ci.userId === currentUser._id && ci.status.en !== 'Sold');
         if (unsoldCrops.length > 0) {
             let profitHtml = `<div class="card profit-card"><h3>${uiStrings.estimated_profit_card_title[lang]}</h3>`;
@@ -365,24 +376,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 const potentialProfit = potentialRevenue - currentExpenses;
 
                 profitHtml += `<div class="profit-item">
-                    <h4>${cropInfo.emoji} ${cropInfo.name[lang]} (${ci.areaSownInAcres} ${uiStrings.acres[lang]})</h4>
-                    <p>${uiStrings.estimated_revenue[lang]}: ₹${potentialRevenue.toLocaleString('en-IN')}</p>
-                    <p class="profit-value">${uiStrings.estimated_profit[lang]}: <strong>₹${potentialProfit.toLocaleString('en-IN')}</strong></p>
-                </div>`;
+                <h4>${cropInfo.emoji} ${cropInfo.name[lang]} (${ci.areaSownInAcres} ${uiStrings.acres[lang]})</h4>
+                <p>${uiStrings.estimated_revenue[lang]}: ₹${potentialRevenue.toLocaleString('en-IN')}</p>
+                <p class="profit-value">${uiStrings.estimated_profit[lang]}: <strong>₹${potentialProfit.toLocaleString('en-IN')}</strong></p>
+            </div>`;
             });
             profitHtml += '</div>';
             summaryContainer.innerHTML += profitHtml;
         }
 
-        const labourSchedule = db.schedules.filter(s => s.resourceId === currentUser._id && s.resourceType === 'LABOUR');
-        if (labourSchedule.length > 0) {
-            let labourHTML = `<div class="card"><h3>${uiStrings.my_labour_jobs[lang]}</h3><ul>`;
-            labourSchedule.forEach(s => {
+        // UPDATED SCHEDULE LOGIC STARTS HERE
+        // Find all equipment owned by the current user
+        const userEquipmentIds = db.equipment.filter(eq => eq.userId === currentUser._id).map(eq => eq._id);
+
+        // Find all schedules for the user's labour OR their equipment rentals
+        const userSchedules = db.schedules.filter(s =>
+            (s.resourceType === 'LABOUR' && s.resourceId === currentUser._id) ||
+            (s.resourceType === 'EQUIPMENT' && userEquipmentIds.includes(s.resourceId))
+        );
+
+        // Renders the schedule card if there are any upcoming jobs
+        if (userSchedules.length > 0) {
+            let scheduleHTML = `<div class="card"><h3>${uiStrings.my_schedule[lang]}</h3><ul>`; // Using the new title
+            userSchedules.forEach(s => {
                 const farmer = db.users.find(u => u._id === s.farmerId);
-                labourHTML += `<li>${uiStrings.work_at_farm[lang]} ${farmer.name[lang]} (${new Date(s.startTime).toLocaleDateString(lang === 'te' ? 'te-IN' : 'en-GB')})</li>`;
+                const date = new Date(s.startTime).toLocaleDateString(lang === 'te' ? 'te-IN' : 'en-GB');
+
+                if (s.resourceType === 'LABOUR') {
+                    // Displays "Labour Work - [Farmer Name]" which works in both languages
+                    scheduleHTML += `<li>${uiStrings.labour_work[lang]} - ${farmer.name[lang]} (${date})</li>`;
+                } else if (s.resourceType === 'EQUIPMENT') {
+                    const equipment = db.equipment.find(eq => eq._id === s.resourceId);
+                    if (equipment) {
+                        // Displays "[Equipment] Rental - [Farmer Name]"
+                        scheduleHTML += `<li>${equipment.type[lang]} ${uiStrings.equipment_rental[lang]} - ${farmer.name[lang]} (${date})</li>`;
+                    }
+                }
             });
-            labourHTML += '</ul></div>';
-            summaryContainer.innerHTML += labourHTML;
+            scheduleHTML += '</ul></div>';
+            summaryContainer.innerHTML += scheduleHTML;
         }
     };
 
@@ -432,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return `<div class="card hire-card">
                             <div>
                                 <h3>${post.details.task[lang]}</h3>
-                                <p>${uiStrings.farmer[lang]}: ${farmer.name[lang]} | ${uiStrings.location[lang]}: ${post.location.address}</p>
+                                <p>${uiStrings.farmer[lang]}: ${farmer.name[lang]} | ${uiStrings.location[lang]}: ${post.location.address[lang]}</p>
                             </div>
                             <div class="rate-info">
                                 ${post.details.offeredRatePerDay ? `<strong>₹${post.details.offeredRatePerDay}</strong><span>${uiStrings.per_day[lang]}</span>` : `<span>${uiStrings.price_negotiable[lang]}</span>`}
@@ -521,8 +553,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const bubble = document.createElement('div');
         bubble.classList.add('chat-bubble', sender);
         if (type === 'image') {
-            bubble.innerHTML =
-                '<img src="leaf_curl_mirchi.jpg" className="chat-image" alt="Chilli leaf with leaf curl."/>';
+            // Updated to use 'class' instead of 'className'
+            bubble.innerHTML = `<img src="leaf_curl_mirchi.jpg" class="chat-image" alt="Chilli leaf with leaf curl."/>`;
         } else if (type === 'options') {
             bubble.classList.add('options');
             const container = document.createElement('div');
@@ -579,6 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = currentUser.language;
         const actionTextMap = {
             'diagnose-start': uiStrings.diagnose_disease[lang],
+            'diagnose-upload': uiStrings.chat_upload_photo_option[lang],
             'check-price': uiStrings.check_market_price[lang],
             'post-labour': uiStrings.post_for_labour[lang],
             'scheme-apply-pmkisan': uiStrings.pm_kisan_apply_prompt[lang]
@@ -588,31 +621,36 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             switch (action) {
                 case 'diagnose-start':
-                    addChatMessage('agent', 'తప్పకుండా. దయచేసి వ్యాధి సోకిన ఆకు యొక్క స్పష్టమైన ఫోటోను అప్‌లోడ్ చేయండి.');
+                    addChatMessage('agent', uiStrings.chat_diagnose_start_prompt[lang]);
                     setTimeout(() => addChatMessage('user', '', 'options', [{
-                        text: 'ఫోటో అప్‌లోడ్ చేయండి',
+                        text: uiStrings.chat_upload_photo_option[lang],
                         action: 'diagnose-upload'
                     }]), 1000);
                     break;
                 case 'diagnose-upload':
                     addChatMessage('user', '', 'image');
-                    setTimeout(() => addChatMessage('agent', 'ఫోటోను విశ్లేషిస్తున్నాను...'), 1500);
-                    setTimeout(() => addChatMessage('agent', `ఇది <strong>మిర్చి ఆకు ముడత (Chilli Leaf Curl)</strong> లా కనిపిస్తోంది. నివారణకు, లీటరు నీటికి 0.5ml <strong>ఇమిడాక్లోప్రిడ్</strong> కలిపి పిచికారీ చేయండి.`), 3500);
+                    setTimeout(() => addChatMessage('agent', uiStrings.chat_analyzing_photo[lang]), 1500);
+                    setTimeout(() => addChatMessage('agent', uiStrings.chat_disease_result_leaf_curl[lang]), 3500);
                     break;
                 case 'check-price':
                     const prices = db.marketPrices.filter(p => p.cropMasterId === currentCrop.cropMasterId);
                     if (prices.length > 0) {
                         const maxPrice = Math.max(...prices.map(p => p.pricePerQuintal));
-                        addChatMessage('agent', `ప్రస్తుతం మీ పంటకు గరిష్ట ధర ₹${maxPrice.toLocaleString('en-IN')}/క్వింటాల్ వరకు ఉంది.`);
+                        const formattedPrice = maxPrice.toLocaleString('en-IN');
+                        const priceInfoString = uiStrings.chat_price_info[lang].replace('{price}', formattedPrice);
+                        addChatMessage('agent', priceInfoString);
                     } else {
-                        addChatMessage('agent', 'క్షమించండి, ఈ పంటకు మార్కెట్ ధర సమాచారం అందుబాటులో లేదు.');
+                        addChatMessage('agent', uiStrings.chat_price_not_found[lang]);
                     }
                     break;
                 case 'post-labour':
-                    addChatMessage('agent', 'తప్పకుండా. నేను మీ కోసం ఒక కూలీల అవసరం పోస్ట్ సృష్టిస్తాను. వివరాలు నిర్ధారించండి.');
+                    addChatMessage('agent', uiStrings.chat_post_labour_confirm[lang]);
                     break;
                 case 'scheme-apply-pmkisan':
-                    addChatMessage('agent', 'మీరు మీ సమీప మీసేవ కేంద్రానికి వెళ్లి, మీ ఆధార్ కార్డు, బ్యాంక్ పాస్‌బుక్, మరియు భూమి రికార్డులతో దరఖాస్తు చేసుకోవచ్చు.');
+                    addChatMessage('agent', uiStrings.chat_scheme_apply_info_pmkisan[lang]);
+                    break;
+                case 'check-weather': // Added a basic weather response
+                    addChatMessage('agent', lang === 'te' ? 'వాతావరణం: 34°C, ఎండగా ఉంది. రాబోయే 3 రోజుల్లో వర్షం సూచన లేదు.' : 'Weather: 34°C, Sunny. No rain expected in the next 3 days.');
                     break;
             }
         }, 1000);
