@@ -77,9 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         check_market_price: { te: 'మార్కెట్ ధర', en: 'Market Price' },
         post_for_labour: { te: 'కూలీల కోసం పోస్ట్ చేయండి', en: 'Post for Labour' },
         govt_schemes_chat_title: { te: 'ప్రభుత్వ పథకాలు', en: 'Government Schemes' },
-        govt_schemes_greeting: { te: 'నమస్కారం! ప్రభుత్వ పథకాల గురించి నేను మీకు ఎలా సహాయపడగలను?', en: 'Hello! How can I help you with government schemes?' },
-        pm_kisan_apply_prompt: { te: 'పీఎం కిసాన్‌కు ఎలా దరఖాస్తు చేయాలి?', en: 'How to apply for PM Kisan?' },
-        // ** NEW CHAT TRANSLATIONS **
         chat_diagnose_start_prompt: { te: 'తప్పకుండా. దయచేసి వ్యాధి సోకిన ఆకు యొక్క స్పష్టమైన ఫోటోను అప్‌లోడ్ చేయండి.', en: 'Certainly. Please upload a clear photo of the affected leaf.' },
         chat_upload_photo_option: { te: 'ఫోటో అప్‌లోడ్ చేయండి', en: 'Upload Photo' },
         chat_analyzing_photo: { te: 'ఫోటోను విశ్లేషిస్తున్నాను...', en: 'Analyzing the photo...' },
@@ -87,7 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
         chat_price_info: { te: `ప్రస్తుతం మీ పంటకు గరిష్ట ధర ₹{price}/క్వింటాల్ వరకు ఉంది.`, en: `The current maximum price for your crop is ₹{price}/quintal.` },
         chat_price_not_found: { te: 'క్షమించండి, ఈ పంటకు మార్కెట్ ధర సమాచారం అందుబాటులో లేదు.', en: 'Sorry, market price information is not available for this crop.' },
         chat_post_labour_confirm: { te: 'తప్పకుండా. నేను మీ కోసం ఒక కూలీల అవసరం పోస్ట్ సృష్టిస్తాను. వివరాలు నిర్ధారించండి.', en: 'Of course. I will create a post for your labour requirement. Please confirm the details.' },
-        chat_scheme_apply_info_pmkisan: { te: 'మీరు మీ సమీప మీసేవ కేంద్రానికి వెళ్లి, మీ ఆధార్ కార్డు, బ్యాంక్ పాస్‌బుక్, మరియు భూమి రికార్డులతో దరఖాస్తు చేసుకోవచ్చు.', en: 'You can apply at your nearest MeeSeva center with your Aadhaar card, Bank Passbook, and Land Record.' }
+
+        // ** NEW SCHEME CHAT TRANSLATIONS **
+        chat_scheme_greeting: { te: 'నమస్కారం! <strong>{schemeName}</strong> పథకం గురించి నేను మీకు ఎలా సహాయపడగలను?', en: 'Hello! How can I help you with the <strong>{schemeName}</strong> scheme?' },
+        chat_scheme_apply_prompt: { te: '{schemeName} కోసం ఎలా దరఖాస్తు చేయాలి?', en: 'How to apply for {schemeName}?' },
+        chat_scheme_apply_info_pmkisan: { te: 'మీరు మీ సమీప మీసేవ కేంద్రానికి వెళ్లి, మీ ఆధార్ కార్డు, బ్యాంక్ పాస్‌బుక్, మరియు భూమి రికార్డులతో దరఖాస్తు చేసుకోవచ్చు.', en: 'You can apply at your nearest MeeSeva center with your Aadhaar card, Bank Passbook, and Land Record.' },
+        chat_scheme_apply_info_rythubharosa: { te: 'దరఖాస్తు చేయడానికి, మీరు మీ గుర్తింపు రుజువు, నివాస రుజువు, భూమి పత్రాలు, ఆధార్ కార్డ్, మరియు బ్యాంక్ పాస్‌బుక్‌తో మీ సమీప రైతు భరోసా కేంద్రాన్ని సందర్శించాలి.', en: 'To apply, visit your nearest Rythu Bharosa Kendra with your ID proof, residence proof, land documents, Aadhaar card, and bank passbook.' }
     };
 
     const db = {
@@ -110,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         farms: [
             { _id: 'farm_anjamma_1', userId: 'user_anjamma', farmName: { te: "రోడ్ దగ్గర పొలం", en: "Road-side Farm" }, acres: 4 },
-            { _id: 'farm_anjamma_2', userId: 'user_anjamma', farmName: { te: "మామిడి తోట వెనుక", en: "Behind Mango Grove" }, acres: 3.5 },
+            { _id: 'farm_anjamma_2', userId: 'user_anjamma', farmName: { te: "మామిడి తోట వెనుక", en: "Behind Mango Grove" }, acres: 1 },
             { _id: 'farm_ramarao_1', userId: 'user_ramarao', farmName: { te: "నది పక్కన భూమి", en: "Land near River" }, acres: 10 },
             { _id: 'farm_malli_1', userId: 'user_malli', farmName: { te: "జనపాడు దగ్గర పొలం", en: "Farm near Janapadu" }, acres: 12 },
             { _id: 'farm_venkanna_1', userId: 'user_venkanna', farmName: { te: "కొత్త పొలం", en: "New Farm" }, acres: 6 },
@@ -509,14 +511,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const lang = currentUser.language;
         const totalAcres = db.farms.filter(f => f.userId === currentUser._id).reduce((sum, farm) => sum + farm.acres, 0);
         const userDocs = currentUser.docs;
-        const eligibleSchemes = db.governmentSchemes.filter(scheme => totalAcres <= scheme.eligibility.maxAcres);
+
+        const eligibleSchemes = db.governmentSchemes.filter(scheme => {
+            const hasAllDocs = scheme.requiredDocs.every(doc => userDocs.includes(doc.id));
+            const meetsAcreage = totalAcres <= scheme.eligibility.maxAcres;
+            return hasAllDocs && meetsAcreage;
+        });
+
         if (eligibleSchemes.length > 0) {
-            content.innerHTML = eligibleSchemes.map(scheme => `<div class="card scheme-card"><h3>${scheme.name[lang]}</h3><p>${scheme.description[lang]}</p><h4>${uiStrings.required_docs[lang]}:</h4><ul class="doc-list">${scheme.requiredDocs.map(doc => `<li class="${userDocs.includes(doc.id) ? 'has-doc' : 'needs-doc'}">${doc.name[lang]} <span>${userDocs.includes(doc.id) ? '✅' : '❌'}</span></li>`).join('')}</ul></div>`).join('');
+            content.innerHTML = eligibleSchemes.map(scheme => `
+            <div class="card scheme-card">
+                <h3>${scheme.name[lang]}</h3>
+                <p>${scheme.description[lang]}</p>
+                <h4>${uiStrings.required_docs[lang]}:</h4>
+                <ul class="doc-list">
+                    ${scheme.requiredDocs.map(doc => `<li class="has-doc">${doc.name[lang]} <span>✅</span></li>`).join('')}
+                </ul>
+                <button class="chat-now-btn scheme-chat-btn" data-scheme-id="${scheme._id}">${uiStrings.talk_to_agent[lang]}</button>
+            </div>
+        `).join('');
         } else {
             content.innerHTML = `<div class="card"><p>${uiStrings.no_eligible_schemes[lang]}</p></div>`;
         }
-        content.innerHTML += `<button id="scheme-chat-btn" class="chat-now-btn">${uiStrings.talk_to_agent[lang]}</button>`;
-        document.getElementById('scheme-chat-btn').onclick = startSchemeChat;
+
+        // Add event listeners to the new buttons
+        content.querySelectorAll('.scheme-chat-btn').forEach(btn => {
+            btn.onclick = (e) => startSchemeChat(e.target.dataset.schemeId);
+        });
     };
 
     const renderProfileScreen = () => {
@@ -591,32 +612,50 @@ document.addEventListener('DOMContentLoaded', () => {
         ]), 1500);
     };
 
-    const startSchemeChat = () => {
+    const startSchemeChat = (schemeId) => {
         const lang = currentUser.language;
         chatReturnScreen = 'schemes-screen';
-        document.getElementById('chat-title').innerText = uiStrings.govt_schemes_chat_title[lang];
+
+        const scheme = db.governmentSchemes.find(s => s._id === schemeId);
+        if (!scheme) return; // Exit if scheme not found
+
+        document.getElementById('chat-title').innerText = scheme.name[lang];
         chatLog.innerHTML = '';
         navigateTo('farm-chat-screen');
-        setTimeout(() => addChatMessage('agent', uiStrings.govt_schemes_greeting[lang]), 500);
+
+        const greeting = uiStrings.chat_scheme_greeting[lang].replace('{schemeName}', scheme.name[lang]);
+        const optionText = uiStrings.chat_scheme_apply_prompt[lang].replace('{schemeName}', scheme.name[lang]);
+
+        setTimeout(() => addChatMessage('agent', greeting), 500);
         setTimeout(() => addChatMessage('user', '', 'options', [{
-            text: uiStrings.pm_kisan_apply_prompt[lang],
-            action: 'scheme-apply-pmkisan'
+            text: optionText,
+            action: 'scheme-apply',
+            payload: { schemeId: scheme._id } // Pass the schemeId in the payload
         }]), 1500);
     };
 
-    const handleChatOption = (action) => {
+    const handleChatOption = (action, payload) => {
         const optionsContainer = document.querySelector('.chat-options-container');
         if (optionsContainer) optionsContainer.parentElement.remove();
 
         const lang = currentUser.language;
+
+        // Add user's choice to the chat log
         const actionTextMap = {
             'diagnose-start': uiStrings.diagnose_disease[lang],
             'diagnose-upload': uiStrings.chat_upload_photo_option[lang],
             'check-price': uiStrings.check_market_price[lang],
             'post-labour': uiStrings.post_for_labour[lang],
-            'scheme-apply-pmkisan': uiStrings.pm_kisan_apply_prompt[lang]
+            'check-weather': uiStrings.check_weather[lang]
         };
-        if (actionTextMap[action]) addChatMessage('user', actionTextMap[action]);
+
+        if(action === 'scheme-apply' && payload) {
+            const scheme = db.governmentSchemes.find(s => s._id === payload.schemeId);
+            const userMessage = uiStrings.chat_scheme_apply_prompt[lang].replace('{schemeName}', scheme.name[lang]);
+            addChatMessage('user', userMessage);
+        } else if (actionTextMap[action]) {
+            addChatMessage('user', actionTextMap[action]);
+        }
 
         setTimeout(() => {
             switch (action) {
@@ -646,10 +685,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'post-labour':
                     addChatMessage('agent', uiStrings.chat_post_labour_confirm[lang]);
                     break;
-                case 'scheme-apply-pmkisan':
-                    addChatMessage('agent', uiStrings.chat_scheme_apply_info_pmkisan[lang]);
+                case 'scheme-apply':
+                    if (payload && payload.schemeId === 'scheme_pm_kisan') {
+                        addChatMessage('agent', uiStrings.chat_scheme_apply_info_pmkisan[lang]);
+                    } else if (payload && payload.schemeId === 'scheme_rythu_bharosa') {
+                        addChatMessage('agent', uiStrings.chat_scheme_apply_info_rythubharosa[lang]);
+                    }
                     break;
-                case 'check-weather': // Added a basic weather response
+                case 'check-weather':
                     addChatMessage('agent', lang === 'te' ? 'వాతావరణం: 34°C, ఎండగా ఉంది. రాబోయే 3 రోజుల్లో వర్షం సూచన లేదు.' : 'Weather: 34°C, Sunny. No rain expected in the next 3 days.');
                     break;
             }
