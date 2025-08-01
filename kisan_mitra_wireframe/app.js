@@ -354,9 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { text: 'వాతావరణం తనిఖీ', action: 'check-weather' },
             { text: 'మార్కెట్ ధర', action: 'check-price' },
             { text: 'కూలీల కోసం పోస్ట్ చేయండి', action: 'post-labour' },
-            { text: 'పరికరాల కోసం పోస్ట్ చేయండి', action: 'post-equipment' },
-            { text: 'అందుబాటులో ఉన్న పనులు', action: 'find-labour-jobs' },
-            { text: 'అందుబాటులో ఉన్న పరికరాలు', action: 'find-equipment' }
+            { text: 'పరికరాల కోసం పోస్ట్ చేయండి', action: 'post-equipment' }
         ]), 1500);
     };
 
