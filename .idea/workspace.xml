@@ -9,7 +9,7 @@
       <change beforePath="$PROJECT_DIR$/kisan_mitra_wireframe/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/kisan_mitra_wireframe/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kisan_mitra_wireframe/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/kisan_mitra_wireframe/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kisan_mitra_wireframe/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/kisan_mitra_wireframe/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/seed_guntur.js" beforeDir="false" afterPath="$PROJECT_DIR$/seed_guntur.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/leaf_curl_mirchi.png" beforeDir="false" afterPath="$PROJECT_DIR$/kisan_mitra_wireframe/leaf_curl_mirchi.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +47,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/kisan_mitra_wireframe" />
+    </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -62,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1754051264299</updated>
-      <workItem from="1754051265369" duration="3799000" />
+      <workItem from="1754051265369" duration="5196000" />
     </task>
     <servers />
   </component>

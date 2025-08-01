@@ -1,98 +1,79 @@
 :root {
-    --primary-color: #2E7D32; /* Green */
-    --secondary-color: #FF8F00; /* Amber */
-    --background-color: #F4F4F4;
-    --card-bg: #FFFFFF;
-    --text-color: #333333;
-    --light-text-color: #757575;
-    --agent-chat-bg: #E9E9EB;
-    --user-chat-bg: #DCF8C6;
-    --weather-bg: #4FC3F7; /* Light Blue */
+    --primary-color: #2E7D32; --secondary-color: #FF8F00; --background-color: #F4F4F4;
+    --card-bg: #FFFFFF; --text-color: #333333; --light-text-color: #757575;
+    --agent-chat-bg: #E9E9EB; --user-chat-bg: #DCF8C6; --weather-bg: #4FC3F7;
+    --profit-color: #4CAF50; --investment-color: #F44336;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #2c2c2c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: var(--text-color);
-}
-
-#app-container {
-    width: 375px;
-    height: 812px;
-    background-color: var(--background-color);
-    border-radius: 40px;
-    border: 10px solid #111;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
+body { font-family: 'Roboto', sans-serif; background-color: #2c2c2c; display: flex; justify-content: center; align-items: center; height: 100vh; color: var(--text-color); }
+#app-container { width: 375px; height: 812px; background-color: var(--background-color); border-radius: 40px; border: 10px solid #111; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 .screen { display: none; width: 100%; height: 100%; flex-direction: column; }
 .screen.active { display: flex; }
 
-/* --- Login Screen --- */
-#login-screen { background: linear-gradient(180deg, var(--primary-color) 0%, #4CAF50 100%); color: white; justify-content: center; align-items: center; text-align: center; padding: 20px; }
-.login-header h1 { font-size: 2.5rem; margin-top: 10px; }
-.login-header p { font-size: 1.2rem; opacity: 0.9; }
-.login-form { margin-top: 40px; width: 100%; }
-.login-form label { display: block; margin-bottom: 10px; }
-.login-form input { width: 90%; padding: 15px; border: none; border-radius: 8px; font-size: 1.2rem; text-align: center; }
-#login-btn { width: 90%; padding: 15px; border: none; border-radius: 8px; font-size: 1.2rem; background-color: var(--secondary-color); color: white; font-weight: bold; margin-top: 20px; cursor: pointer; }
-
-/* --- General App Layout --- */
+/* General Layout & Header */
 .app-header { background-color: var(--primary-color); color: white; padding: 20px 15px 15px 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 10; }
 .screen-content { flex-grow: 1; overflow-y: auto; padding: 15px; }
-.screen-content.with-tabs { padding-top: 5px; } /* Less padding when there are tabs */
 .screen-content:not(#chat-log) { padding-bottom: 80px; }
+.screen-content.with-tabs { padding-top: 5px; }
 
-/* --- Cards --- */
+/* Login */
+#login-screen { background: linear-gradient(180deg, var(--primary-color) 0%, #4CAF50 100%); color: white; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+.login-header h1 { font-size: 2.5rem; margin-top: 10px; }
+.login-form input { width: 90%; padding: 15px; border: none; border-radius: 8px; font-size: 1.2rem; text-align: center; margin-top: 10px;}
+#login-btn { width: 90%; padding: 15px; border: none; border-radius: 8px; font-size: 1.2rem; background-color: var(--secondary-color); color: white; font-weight: bold; margin-top: 20px; cursor: pointer; }
+
+/* Cards */
 .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 .card.clickable { cursor: pointer; transition: transform 0.2s; }
 .card.clickable:hover { transform: translateY(-2px); }
-.card h3 { font-size: 1.1rem; margin-bottom: 5px; color: var(--primary-color); }
+.card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary-color); }
 .card p, .card li { font-size: 0.9rem; color: var(--light-text-color); line-height: 1.5; }
-.card-icon { font-size: 2rem; color: var(--primary-color); margin-right: 15px; }
+.card ul { list-style: none; padding-left: 5px; }
 .card-flex { display: flex; align-items: center; }
 .status-dot { height: 10px; width: 10px; border-radius: 50%; margin-left: auto; }
 .status-dot.growing { background-color: #4CAF50; }
 .status-dot.preparing { background-color: #FFC107; }
 .status-dot.harvested { background-color: #E65100; }
+.status-dot.sold { background-color: #607D8B; }
 
-/* --- Homepage Dashboard --- */
+/* Homepage Dashboard */
 .weather-card { background: var(--weather-bg); color: white; display: flex; align-items: center; justify-content: space-between; }
 .weather-card .material-icons { font-size: 4rem; opacity: 0.8; }
 .weather-card h3 { color: white; }
+.pie-chart-container { display: flex; align-items: center; gap: 20px; margin-bottom: 15px; }
+#pie-chart { width: 100px; height: 100px; border-radius: 50%; }
+#pie-chart-legend { font-size: 0.8rem; }
+.legend-item { display: flex; align-items: center; margin-bottom: 5px; }
+.legend-color { width: 12px; height: 12px; border-radius: 3px; margin-right: 8px; }
+#financial-summary-totals { margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; font-size: 0.95rem; }
+#financial-summary-totals p { margin-bottom: 5px; }
+#financial-summary-totals .profit { color: var(--profit-color); font-weight: 500; }
+#financial-summary-totals .investment { color: var(--investment-color); font-weight: 500; }
 
-/* --- Tabs and Filters --- */
-.tabs, .filters { display: flex; padding: 10px 15px; background-color: var(--card-bg); border-bottom: 1px solid #eee; gap: 10px; }
-.tab-btn, .filter-btn { padding: 8px 16px; border: 1px solid #ddd; background: none; border-radius: 18px; cursor: pointer; font-size: 0.9rem; }
+/* Tabs and Filters */
+.tabs, .filters { display: flex; padding: 10px 15px; background-color: var(--card-bg); border-bottom: 1px solid #eee; gap: 10px; overflow-x: auto; }
+.tabs.four-tabs { justify-content: space-between; } /* Make 4 tabs fit */
+.tab-btn, .filter-btn { padding: 8px 12px; border: 1px solid #ddd; background: none; border-radius: 18px; cursor: pointer; font-size: 0.8rem; white-space: nowrap; }
 .tab-btn.active, .filter-btn.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
 
-/* --- Hire Screen Specifics --- */
-.post-section-title { font-weight: 500; color: var(--light-text-color); margin: 20px 0 10px 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+/* Profile Screen Section */
+.profile-section h3 { border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; }
 
-/* --- Bottom Navigation --- */
+/* Bottom Navigation */
 #bottom-nav { position: absolute; bottom: 0; width: 100%; height: 70px; background-color: var(--card-bg); display: flex; justify-content: space-around; border-top: 1px solid #eee; }
-.nav-btn { background: none; border: none; color: var(--light-text-color); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; flex-grow: 1; }
+.nav-btn { background: none; border: none; color: var(--light-text-color); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; flex-grow: 1; padding: 5px 0; }
 .nav-btn span:first-child { font-size: 24px; }
-.nav-btn span:last-child { font-size: 12px; }
+.nav-btn span:last-child { font-size: 11px; }
 .nav-btn.active { color: var(--primary-color); }
 
-/* --- Chat Screen --- */
+/* Chat Screen */
 .chat-header { display: flex; align-items: center; }
 .chat-header #back-to-farm { margin-right: 15px; cursor: pointer; }
 #chat-log { display: flex; flex-direction: column; gap: 12px; }
-.chat-bubble { max-width: 80%; padding: 10px 15px; border-radius: 18px; line-height: 1.4; }
+.chat-bubble { max-width: 80%; padding: 10px 15px; border-radius: 18px; line-height: 1.4; word-wrap: break-word; }
 .chat-bubble.agent { background-color: var(--agent-chat-bg); align-self: flex-start; border-bottom-left-radius: 4px; }
 .chat-bubble.user { background-color: var(--user-chat-bg); align-self: flex-end; border-bottom-right-radius: 4px; }
-.chat-image { width: 100%; max-width: 200px; border-radius: 15px; }
-.chat-bubble.options { background: none; padding: 0; align-self: flex-end; width: 100%;}
+.chat-image { width: 100%; max-width: 200px; border-radius: 15px; display: block; }
+.chat-bubble.options { background: none; padding: 0; align-self: flex-end; width: 100%; }
 .chat-options-container { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .chat-option-btn { background-color: var(--card-bg); color: var(--primary-color); border: 1px solid var(--primary-color); border-radius: 18px; padding: 8px 15px; font-size: 0.9rem; cursor: pointer; }

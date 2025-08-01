@@ -30,7 +30,8 @@
         <header class="app-header">
             <h2 id="welcome-message"></h2>
         </header>
-        <main id="home-content" class="screen-content"></main>
+        <main id="home-content" class="screen-content">
+        </main>
     </div>
 
     <div id="my-farm-screen" class="screen">
@@ -47,10 +48,12 @@
     </div>
 
     <div id="hire-screen" class="screen">
-        <header class="app-header"><h2>అద్దెకు</h2></header>
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="labour">కూలీలు</button>
-            <button class="tab-btn" data-tab="equipment">పరికరాలు</button>
+        <header class="app-header"><h2>సేవలు/పరికరాలు</h2></header>
+        <div class="tabs four-tabs">
+            <button class="tab-btn active" data-filter="my-labour-posts">నా కూలీల పోస్టులు</button>
+            <button class="tab-btn" data-filter="my-equipment-posts">నా పరికరాల పోస్టులు</button>
+            <button class="tab-btn" data-filter="other-labour-posts">ఇతర కూలీల పనులు</button>
+            <button class="tab-btn" data-filter="other-equipment-posts">ఇతర పరికరాల పనులు</button>
         </div>
         <main id="hire-content" class="screen-content with-tabs"></main>
     </div>
@@ -59,7 +62,7 @@
         <header class="app-header"><h2>మార్కెట్ ధరలు</h2></header>
         <div class="filters">
             <span>Sort by:</span>
-            <button class="filter-btn" data-sort="price">ధర</button>
+            <button class="filter-btn active" data-sort="price">ధర</button>
             <button class="filter-btn" data-sort="locality">ప్రాంతం</button>
         </div>
         <main id="market-prices-content" class="screen-content with-tabs"></main>
@@ -81,7 +84,7 @@
         </button>
         <button class="nav-btn" data-screen="hire-screen">
             <span class="material-icons">engineering</span>
-            <span>అద్దెకు</span>
+            <span>సేవలు</span>
         </button>
         <button class="nav-btn" data-screen="market-prices-screen">
             <span class="material-icons">bar_chart</span>
